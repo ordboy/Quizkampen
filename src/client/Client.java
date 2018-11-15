@@ -23,14 +23,14 @@ public class Client
 		Scanner scn = new Scanner(System.in); 
 		
 		// getting localhost ip 
-		InetAddress ip = InetAddress.getByName("localhost"); 
+		InetAddress ip = InetAddress.getLoopbackAddress();
 		
 		// establish the connection 
-		Socket s = new Socket(ip, ServerPort); 
+		Socket socket = new Socket(ip, ServerPort); 
 		
 		// obtaining input and out streams 
-		DataInputStream dis = new DataInputStream(s.getInputStream()); 
-		DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
+		DataInputStream inputstream = new DataInputStream(socket.getInputStream()); 
+		DataOutputStream outputstream = new DataOutputStream(socket.getOutputStream()); 
 
 		// sendMessage thread 
 		Thread sendMessage = new Thread(new Runnable() 
@@ -40,11 +40,11 @@ public class Client
 				while (true) { 
 
 					// read the message to deliver. 
-					String msg = scn.nextLine(); 
+					String message = scn.nextLine(); 
 					
 					try { 
 						// write on the output stream 
-						dos.writeUTF(msg); 
+						outputstream.writeUTF(message); 
 					} catch (IOException e) { 
 						e.printStackTrace(); 
 					} 
@@ -61,8 +61,8 @@ public class Client
 				while (true) { 
 					try { 
 						// read the message sent to this client 
-						String msg = dis.readUTF(); 
-						System.out.println(msg); 
+						String message = inputstream.readUTF(); 
+						System.out.println(message); 
 					} catch (IOException e) { 
 
 						e.printStackTrace(); 

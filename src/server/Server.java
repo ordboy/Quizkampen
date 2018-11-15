@@ -18,7 +18,7 @@ public class Server
 { 
 
 	// Vector to store active clients 
-	static Vector<ClientHandler> ar = new Vector<>(); 
+	static ArrayList<ClientHandler> clientList = new ArrayList(); 
 	
 	// counter for clients 
 	static int i = 0; 
@@ -26,35 +26,35 @@ public class Server
 	public static void main(String[] args) throws IOException 
 	{ 
 		// server is listening on port 1234 
-		ServerSocket ss = new ServerSocket(1234); 
+		ServerSocket listenerSocket = new ServerSocket(1234); 
 		
-		Socket s; 
+		Socket socket; 
 		
 		// running infinite loop for getting 
 		// client request 
 		while (true) 
 		{ 
 			// Accept the incoming request 
-			s = ss.accept(); 
+			socket = listenerSocket.accept(); 
 
-			System.out.println("New client request received : " + s); 
+			System.out.println("New client request received : " + socket); 
 			
 			// obtain input and output streams 
-			DataInputStream dis = new DataInputStream(s.getInputStream()); 
-			DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
+			DataInputStream inputstream = new DataInputStream(socket.getInputStream()); 
+			DataOutputStream outputstream = new DataOutputStream(socket.getOutputStream()); 
 			
 			System.out.println("Creating a new handler for this client..."); 
 
 			// Create a new handler object for handling this request. 
-			ClientHandler mtch = new ClientHandler(s,"client " + i, dis, dos); 
+			ClientHandler match = new ClientHandler(socket,"client " + i, inputstream, outputstream); 
 
 			// Create a new Thread with this object. 
-			Thread t = new Thread(mtch); 
+			Thread t = new Thread(match); 
 			
 			System.out.println("Adding this client to active client list"); 
 
 			// add this client to active clients list 
-			ar.add(mtch); 
+			clientList.add(match); 
 
 			// start the thread. 
 			t.start(); 
@@ -114,7 +114,7 @@ class ClientHandler implements Runnable
 
 				// search for the recipient in the connected devices list. 
 				// ar is the vector storing client of active users 
-				for (ClientHandler mc : Server.ar) 
+				for (ClientHandler mc : Server.clientList) 
 				{ 
 					// if the recipient is found, write on its 
 					// output stream 
