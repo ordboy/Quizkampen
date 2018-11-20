@@ -1,6 +1,6 @@
 package server;
 
-import Client.Protocol;
+import client.Protocol;
 import com.sun.security.ntlm.NTLMException;
 import com.sun.security.ntlm.Server;
 
