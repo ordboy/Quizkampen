@@ -19,6 +19,7 @@ public class ServerListener {
     public static void main(String[] args) throws Exception {
         ServerSocket listener = new ServerSocket(55555);
         System.out.println(" Server is Runni");
+        
         try {
             while (true) {
                 Game game = new Game();
@@ -32,8 +33,8 @@ public class ServerListener {
                 player1.start();
                 player2.start();
             }
-        } finally {
-            listener.close();
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 }

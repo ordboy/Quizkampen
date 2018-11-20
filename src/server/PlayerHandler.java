@@ -31,6 +31,7 @@ public class PlayerHandler extends Thread {
             new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             output.println("Welcome player: " + player);
+            output.flush();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -45,28 +46,27 @@ public class PlayerHandler extends Thread {
         
 //        if(player == 1)
 //            output.println("svara");
-        
-        while(true){
-            String svar;
-            try {
-                svar = input.readLine();
+        String svar;
+        try {
+        while((svar = input.readLine().trim())!=null){
+            
+            
+                
             
             if(svar.equalsIgnoreCase("ja")){
-                output.println("Grattis!");
-                output.flush();
-            }if (svar.equalsIgnoreCase("nej")){
-                output.println("Tråkigt");
-                output.flush();
-                
-            }else{
-                output.println("Felaktigt svar");
-                output.flush();
+                output.println("Grattis!");  
+                break;
+            }
+            else if (svar.equalsIgnoreCase("nej")){
+                output.println("Tråkigt");                
+                break;
             }
             
+        }    
             }catch(Exception e){
                 e.printStackTrace();
             }
-        }
+        
 
     }
 
