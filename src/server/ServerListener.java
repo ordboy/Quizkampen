@@ -1,8 +1,8 @@
 package server;
 
 import client.Protocol;
-import com.sun.security.ntlm.NTLMException;
-import com.sun.security.ntlm.Server;
+
+
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,40 +11,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class ServerListener extends Thread {
-    protected int port = 55555;
-    ServerSocket serverSocket;
-    Protocol match = new Protocol();
-
-    public ServerListener() throws IOException {
-        serverSocket = new ServerSocket(port);
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Socket clientSocket_1 = serverSocket.accept();
-
-                ObjectOutputStream Player1Out = new ObjectOutputStream(clientSocket_1.getOutputStream());
-                ObjectInputStream Player1In = new ObjectInputStream(clientSocket_1.getInputStream());
-                Player1Out.writeObject(match);
-
-                Socket clientSocket_2 = serverSocket.accept();
-                ObjectOutputStream Player2Out = new ObjectOutputStream(clientSocket_2.getOutputStream());
-                ObjectInputStream Player2In = new ObjectInputStream(clientSocket_2.getInputStream());
-                Player2Out.writeObject(match);
-
-                Server server = new Server(clientSocket_1, clientSocket_2);
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
+public class ServerListener {
+  
+    /**
+     * Runs the application. Pairs up clients that connect.
+     */
+    public static void main(String[] args) throws Exception {
+        ServerSocket listener = new ServerSocket(55555);
+        System.out.println(" Server is Runni");
+        try {
+            while (true) {
+                Game game = new Game();
+                PlayerHandler player1 
+                        = new PlayerHandler(listener.accept(), 1, game);
+                PlayerHandler player2 
+                        = new PlayerHandler(listener.accept(), 2, game);
+                player1.setOpponent(player2);
+                player2.setOpponent(player1);
+                game.setCurrentPlayer(player1);
+                player1.start();
+                player2.start();
             }
-
-            catch (NTLMException e) { // ingen aning vad det är???
-                e.printStackTrace();
-            }
+        } finally {
+            listener.close();
         }
     }
-
 }

@@ -27,7 +27,7 @@ public class Server {
         File file = new File("src\\Documents\\questions");
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
-            tempQuestion = new Question(scanner.nextLine());
+//            tempQuestion = new Question(scanner.nextLine());
             tempQuestion.setAnswerPrel(scanner.nextLine(), true);
             tempQuestion.setAnswerPrel(scanner.nextLine(), false);
             tempQuestion.setAnswerPrel(scanner.nextLine(), false);
