@@ -1,53 +1,68 @@
 package client;
 
-public class Protocol {
-    private static final int PLAYER1_WAITING = 0;
-    private static final int PLAYER2_CONNECTED = 1;
-    private static final int CHOOSE_CATAGORY = 2;
-    private static final int START_ROUND = 3;
-    private static final int ANSWER_QUESTIONS = 4;
-    private static final int NUMBER_OF_ROUNDS = 2;
 
-    private int state = PLAYER1_WAITING;
-    private int currentRound = 0;
+import server.Question;
+
+import java.io.Serializable;
 
 
+public class Protocol implements Serializable {
 
-    public String processInput(String theInput) {
-        String theOutput = null;
 
-        if (state == PLAYER1_WAITING) {
-            theOutput = "waiting for player 2";
-            state = PLAYER2_CONNECTED;
-        }
-        else if (state == PLAYER2_CONNECTED) {
-             state = CHOOSE_CATAGORY;
-        }
-        else if (state == CHOOSE_CATAGORY) {
-            state = START_ROUND;
-        }
-        else if (state == START_ROUND) {
-            if (currentRound == (NUMBER_OF_ROUNDS - 1))
-                currentRound = 0;
-            else
-                currentRound++;
-            state = ANSWER_QUESTIONS;
-        }
-        else if (state == ANSWER_QUESTIONS) {
-            state = CHOOSE_CATAGORY;
-        }
-        else if (state == CHOOSE_CATAGORY) {
-            state = START_ROUND;
-        }
-        else if (state == START_ROUND) {
-            if (currentRound == (NUMBER_OF_ROUNDS - 1))
-                currentRound = 0;
-            else
-                currentRound++;
-            state = ANSWER_QUESTIONS;
-        }
+    int state;
+    final int PLAYER1_WAITING = 0;
+    final int PLAYER2_CONNECTED = 1;
+    final int CHOOSE_CATAGORY = 2;
+    final int START_ROUND = 3;
+    final int ANSWER_QUESTIONS = 4;
+    final int RESULT_SCREEN = 5;
 
-        return theOutput;
+
+
+    Question[] tempQuestions;
+    boolean[] opponentsAnswers;
+    int roundCounter;
+
+    protected int scorePlayerOne;
+    protected int scorePlayerTwo;
+    private int allQuestions;
+
+    public Protocol() {
+        roundCounter = 0;
+        state = PLAYER1_WAITING;
     }
 
+
+    public void setTotalQsInRond(int allQuestions) {
+        this.allQuestions = allQuestions;
+        tempQuestions = new Question[this.allQuestions];
+        opponentsAnswers = new boolean[this.allQuestions];
+        for (int i = 0; i < this.allQuestions; i++) {
+            tempQuestions[i] = new Question();
+            opponentsAnswers[i] = false;
+        }
+    }
+
+
+
+    public void clearOpponentAnswers() {
+        for (int i = 0; i < opponentsAnswers.length; i++) {
+            opponentsAnswers[i] = false;
+        }
+    }
+
+
+
+    public void setScoreUserOne(int score){
+        this.scorePlayerOne = score;
+    }
+    public void setScorePlayerTwo(int score){
+        this.scorePlayerTwo = score;
+    }
+    public int getScorePlayerOne(){
+        return this.scorePlayerOne;
+    }
+    public int getScorePlayerTwo(){
+        return this.scorePlayerTwo;
+    }
 }

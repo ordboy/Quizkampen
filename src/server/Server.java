@@ -1,144 +1,39 @@
-/*
-
- */
-
 package server;
 
+import java.io.*;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-// Java implementation of Server side 
-// It contains two classes : Server and ClientHandler 
-// Save file as Server.java 
+public class Server {
+    private Socket clientSocket1;
+    private Socket clientSocket2;
+    private List<Question> questions = new ArrayList<>();
+    private Question tempQuestion;
 
-import java.io.*; 
-import java.util.*; 
-import java.net.*; 
+    public Server(Socket clientSocket1, Socket clientSocket2) throws IOException{
+        this.clientSocket1 = clientSocket1;
+        this.clientSocket2 = clientSocket2;
+        readQuestionsFromFile();
 
-// Server class 
-public class Server 
-{ 
+        ObjectOutputStream player1Out = new ObjectOutputStream(clientSocket1.getOutputStream());
+        ObjectInputStream Player1In = new ObjectInputStream(clientSocket1.getInputStream());
 
-	// Vector to store active clients 
-	static ArrayList<ClientHandler> clientList = new ArrayList(); 
-	
-	// counter for clients 
-	static int i = 0; 
-
-	public static void main(String[] args) throws IOException 
-	{ 
-		// server is listening on port 1234 
-		ServerSocket listenerSocket = new ServerSocket(1234); 
-		
-		Socket socket; 
-		
-		// running infinite loop for getting 
-		// client request 
-		while (true) 
-		{ 
-			// Accept the incoming request 
-			socket = listenerSocket.accept(); 
-
-			System.out.println("New client request received : " + socket); 
-			
-			// obtain input and output streams 
-			DataInputStream inputstream = new DataInputStream(socket.getInputStream()); 
-			DataOutputStream outputstream = new DataOutputStream(socket.getOutputStream()); 
-			
-			System.out.println("Creating a new handler for this client..."); 
-
-			// Create a new handler object for handling this request. 
-			ClientHandler match = new ClientHandler(socket,"client " + i, inputstream, outputstream); 
-
-			// Create a new Thread with this object. 
-			Thread t = new Thread(match); 
-			
-			System.out.println("Adding this client to active client list"); 
-
-			// add this client to active clients list 
-			clientList.add(match); 
-
-			// start the thread. 
-			t.start(); 
-
-			// increment i for new client. 
-			// i is used for naming only, and can be replaced 
-			// by any naming scheme 
-			i++; 
-
-		} 
-	} 
-} 
-
-// ClientHandler class 
-class ClientHandler implements Runnable 
-{ 
-	Scanner scn = new Scanner(System.in); 
-	private String name; 
-	final DataInputStream dis; 
-	final DataOutputStream dos; 
-	Socket s; 
-	boolean isloggedin; 
-	
-	// constructor 
-	public ClientHandler(Socket s, String name, 
-							DataInputStream dis, DataOutputStream dos) { 
-		this.dis = dis; 
-		this.dos = dos; 
-		this.name = name; 
-		this.s = s; 
-		this.isloggedin=true; 
-	} 
-
-	@Override
-	public void run() { 
-
-		String received; 
-		while (true) 
-		{ 
-			try
-			{ 
-				// receive the string 
-				received = dis.readUTF(); 
-				
-				System.out.println(received); 
-				
-				if(received.equals("logout")){ 
-					this.isloggedin=false; 
-					this.s.close(); 
-					break; 
-				} 
-				
-				// break the string into message and recipient part 
-				StringTokenizer st = new StringTokenizer(received, "#"); 
-				String MsgToSend = st.nextToken(); 
-				String recipient = st.nextToken(); 
-
-				// search for the recipient in the connected devices list. 
-				// ar is the vector storing client of active users 
-				for (ClientHandler mc : Server.clientList) 
-				{ 
-					// if the recipient is found, write on its 
-					// output stream 
-					if (mc.name.equals(recipient) && mc.isloggedin==true) 
-					{ 
-						mc.dos.writeUTF(this.name+" : "+MsgToSend); 
-						break; 
-					} 
-				} 
-			} catch (IOException e) { 
-				
-				e.printStackTrace(); 
-			} 
-			
-		} 
-		try
-		{ 
-			// closing resources 
-			this.dis.close(); 
-			this.dos.close(); 
-			
-		}catch(IOException e){ 
-			e.printStackTrace(); 
-		} 
-	} 
-} 
-
+        ObjectOutputStream Player2Out = new ObjectOutputStream(clientSocket2.getOutputStream());
+        ObjectInputStream Player2In = new ObjectInputStream(clientSocket2.getInputStream());
+    }
+    public void readQuestionsFromFile() throws FileNotFoundException {
+        File file = new File("src\\Documents\\questions");
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            tempQuestion = new Question(scanner.nextLine());
+            tempQuestion.setAnswerPrel(scanner.nextLine(), true);
+            tempQuestion.setAnswerPrel(scanner.nextLine(), false);
+            tempQuestion.setAnswerPrel(scanner.nextLine(), false);
+            tempQuestion.setAnswerPrel(scanner.nextLine(), false);
+            questions.add(tempQuestion);
+        }
+        scanner.close();
+    }
+}
