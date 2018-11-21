@@ -6,7 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class QuestionsDatabase {
-//test för git
+//test för gitwgregreger wgrger
+    //segsgsrgrsg
     String questionsfile = "src\\Documents\\questions";
 
     public QuestionsDatabase questionList(String questionsfile, boolean answers) throws Exception {
