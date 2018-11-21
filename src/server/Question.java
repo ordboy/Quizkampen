@@ -17,7 +17,10 @@ public class Question implements Serializable {
         this.question = question;
     }
 
-    public void setAnswerAlternatives(String answer, boolean isTrue) {
+    public void setCorrectAnswers(String answer, boolean isTrue) {
+        answers.add(new AnswersPrel(correctAnswer, isTrue));
+    }
+    public void setAnswers(String answer, boolean isTrue) {
         answers.add(new AnswersPrel(answer, isTrue));
     }
 

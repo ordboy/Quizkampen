@@ -14,7 +14,7 @@ public class AnswersPrel {
         return answer;
     }
 
-    public boolean isCorrectAnswer() {
+    public boolean getCorrectAnswer() {
         return correctAnswer;
     }
 
