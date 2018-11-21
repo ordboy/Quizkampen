@@ -8,6 +8,7 @@ import java.io.IOException;
 public class QuestionsDatabase {
 //test för gitwgregreger wgrger
     //segsgsrgrsg
+    //push git
     String questionsfile = "src\\Documents\\questions";
 
     public QuestionsDatabase questionList(String questionsfile, boolean answers) throws Exception {
