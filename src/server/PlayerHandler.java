@@ -49,10 +49,7 @@ public class PlayerHandler extends Thread {
         String svar;
         try {
         while((svar = input.readLine().trim())!=null){
-            
-            
-                
-            
+
             if(svar.equalsIgnoreCase("ja")){
                 output.println("Grattis!");  
                 break;
