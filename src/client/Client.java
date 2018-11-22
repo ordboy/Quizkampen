@@ -15,26 +15,20 @@ public class Client{
 
     public Client() {
         try {
-            Scanner scan = new Scanner(System.in);
+            
             String input;
             socket = new Socket(host, 55555);
             BufferedReader inputline = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter outputline = new PrintWriter(socket.getOutputStream(),true);
+            Out out = new Out();
+            out.setOut(outputline);
+            out.start();
             In in = new In();
             in.setIn(inputline);
             in.start();
 //            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             
-            while(true){
-//                input=inputline.readLine();
-//                System.out.println(input);
-            String userinput = scan.nextLine();
-            outputline.println(userinput);
-            outputline.flush();
             
-            
-            
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,11 +37,31 @@ public class Client{
     public static void main(String[] args) {
         Client client = new Client();
     }
+    
 
 }
-//class Out extends Thread{
-//    PrintWriter
-//}
+class Out extends Thread{
+    Scanner scan = new Scanner(System.in);
+    PrintWriter out;
+    public void setOut(PrintWriter out){
+        this.out = out;
+    }
+    @Override
+    public void run(){
+        String userinput = "start";
+        
+        while(true){
+//                input=inputline.readLirne();
+//                System.out.println(input);
+            out.println(userinput);
+            out.flush();
+            userinput = scan.nextLine();
+            
+            
+            
+            }
+    }
+}
 class In extends Thread{
     BufferedReader in;
     public void setIn(BufferedReader in){

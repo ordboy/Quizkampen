@@ -1,6 +1,5 @@
 package server;
 
-import client.Protocol;
 
 
 
@@ -22,16 +21,18 @@ public class ServerListener {
         
         try {
             while (true) {
-                Game game = new Game();
+                Protocol game = new Protocol();
+//                Game game = new Game();
                 PlayerHandler player1 
                         = new PlayerHandler(listener.accept(), 1, game);
                 PlayerHandler player2 
                         = new PlayerHandler(listener.accept(), 2, game);
                 player1.setOpponent(player2);
                 player2.setOpponent(player1);
-                game.setCurrentPlayer(player1);
+//                game.setCurrentPlayer(player1);
                 player1.start();
                 player2.start();
+                
             }
         } catch(Exception e){
             e.printStackTrace();
