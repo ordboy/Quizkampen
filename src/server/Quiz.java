@@ -124,6 +124,7 @@ public class Quiz extends JFrame{
 	};
 
 	public static void main(String args[]){
+            
         Quiz quiz = new Quiz();
 	}
 	
