@@ -138,7 +138,7 @@ public class GUI extends JFrame{
 	}
 	
 	public GUI(){
-		super("Corevia");
+		super("Välkommen");
 		setResizable(true);
 		setSize(650,300);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

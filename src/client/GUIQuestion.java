@@ -9,6 +9,7 @@ package client;
  *
  * @author sarko
  */
+import client.GUI;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
@@ -35,7 +36,7 @@ public class GUIQuestion extends JPanel implements ActionListener{
 	ButtonGroup group=new ButtonGroup();
 	//bottom
 	JPanel botPanel=new JPanel();
-	JButton next=new JButton("Next");
+//	JButton next=new JButton("Next");
 	JButton finish=new JButton("Finish");
 	
 	/*public static void main(String args[]){
@@ -68,9 +69,9 @@ public class GUIQuestion extends JPanel implements ActionListener{
 		}
 		add(aPanel);
 		//bottom
-		next.addActionListener(this);
+//		next.addActionListener(this);
 		finish.addActionListener(this);
-		botPanel.add(next);
+//		botPanel.add(next);
 		botPanel.add(finish);
 		add(botPanel);
 	
@@ -90,19 +91,20 @@ public class GUIQuestion extends JPanel implements ActionListener{
                 this.repaint();
                 this.revalidate();
 		Object src=e.getSource();
-		//next button
-		if(src.equals(next)){
-			showResult();
-			if(selected==correctAns){
-				used=true;
-				quiz.next();
-			}
-		}
+		//option & next button
+		if(!src.equals(tmp)){
+		} else {
+                    showResult();
+                    if(selected==correctAns){
+                        used=true;
+                        quiz.next();
+                    }
+            }
 		//finish button
 		if(src.equals(finish)){
 			quiz.showSummary();
 		}
-		//radio buttons
+		//through buttons
 		for(int i=0;i<responses.length;i++){
 			if(src==responses[i]){
 				selected=i;

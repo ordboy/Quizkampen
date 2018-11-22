@@ -36,6 +36,7 @@ public class Client{
 
     public static void main(String[] args) {
         Client client = new Client();
+        GUI g = new GUI();
     }
     
 
@@ -62,6 +63,13 @@ class Out extends Thread{
             }
     }
 }
+
+
+
+
+
+
+
 class In extends Thread{
     BufferedReader in;
     public void setIn(BufferedReader in){
