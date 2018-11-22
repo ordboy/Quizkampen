@@ -9,6 +9,7 @@ package client;
  *
  * @author sarko
  */
+import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -77,6 +78,17 @@ public class GUIQuestion extends JPanel implements ActionListener{
 	
         @Override
 	public void actionPerformed(ActionEvent e){
+            JButton tmp;
+                tmp = (JButton) e.getSource();
+                if(tmp.equals(tmp)){
+                    tmp.setBackground(Color.green);
+                }
+//                else{
+//                    tmp.setBackground(Color.red);
+                    
+                tmp.setOpaque(true);
+                this.repaint();
+                this.revalidate();
 		Object src=e.getSource();
 		//next button
 		if(src.equals(next)){
