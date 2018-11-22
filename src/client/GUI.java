@@ -60,7 +60,7 @@ public class GUI extends JFrame{
 			answers[2],
 			2,this
 		),
-		new GUIQuestion( //komment
+		new GUIQuestion( //komment two
 			"Vilket är den största planet i solsystemet?",
 			answers[3],
 			1,this
