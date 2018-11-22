@@ -15,7 +15,7 @@ public class Server {
     public Server(Socket clientSocket1, Socket clientSocket2) throws IOException{
         this.clientSocket1 = clientSocket1;
         this.clientSocket2 = clientSocket2;
-        readQuestionsFromFile();
+
 
         ObjectOutputStream player1Out = new ObjectOutputStream(clientSocket1.getOutputStream());
         ObjectInputStream Player1In = new ObjectInputStream(clientSocket1.getInputStream());
@@ -23,17 +23,6 @@ public class Server {
         ObjectOutputStream Player2Out = new ObjectOutputStream(clientSocket2.getOutputStream());
         ObjectInputStream Player2In = new ObjectInputStream(clientSocket2.getInputStream());
     }
-    public void readQuestionsFromFile() throws FileNotFoundException {
-        File file = new File("src\\Documents\\questions");
-        Scanner scanner = new Scanner(file);
-        while (scanner.hasNextLine()) {
-//            tempQuestion = new Question(scanner.nextLine());
-            tempQuestion.setAnswerPrel(scanner.nextLine(), true);
-            tempQuestion.setAnswerPrel(scanner.nextLine(), false);
-            tempQuestion.setAnswerPrel(scanner.nextLine(), false);
-            tempQuestion.setAnswerPrel(scanner.nextLine(), false);
-            questions.add(tempQuestion);
-        }
-        scanner.close();
-    }
+
+
 }

@@ -10,7 +10,7 @@ package server;
 public class Game {
     String[] q;
     
-    private PlayerHandler currentPlayer;
+    public PlayerHandler currentPlayer;
 
     /**
      * @return the currentPlayer
