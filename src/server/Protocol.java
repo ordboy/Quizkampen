@@ -60,27 +60,27 @@ public class Protocol implements Serializable {
             return "p1vänta ya";
         }
         if(state == 5){
-            
+
             state++;
             return "p2välj kat";
         }
-            
+
         else{
             return null;
         }
     }
     
     
-    public void setTotalQsInRond(int allQuestions) {
-        
-        this.allQuestions = allQuestions;
-        tempQuestions = new Question[this.allQuestions];
-        opponentsAnswers = new boolean[this.allQuestions];
-        for (int i = 0; i < this.allQuestions; i++) {
-            tempQuestions[i] = new Question();
-            opponentsAnswers[i] = false;
-        }
-    }
+    //ublic void setTotalQsInRond(int allQuestions) {
+    //
+    //   this.allQuestions = allQuestions;
+    //   tempQuestions = new Question[this.allQuestions];
+    //   opponentsAnswers = new boolean[this.allQuestions];
+    //   for (int i = 0; i < this.allQuestions; i++) {
+    //       tempQuestions[i] = new Question();
+    //       opponentsAnswers[i] = false;
+    //   }
+    //
 
 
 
