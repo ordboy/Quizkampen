@@ -18,7 +18,7 @@ public class PlayerHandler {
 
 	private Player p1, p2;
 	
-	private Database databas = new Database();
+	private DAO databas = new DAO();
 	private Question question;
 	
 	Properties p = new Properties();

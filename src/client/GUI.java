@@ -1,28 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
-/**
- *
- * @author sarko
- */
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+
 import javax.swing.JButton;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class GUI extends JFrame implements ActionListener{
 
@@ -151,7 +140,7 @@ public class GUI extends JFrame implements ActionListener{
 
 	public void setupScoreGUI(int i1, int i2){
 		
-		panel2.setVisible(false);
+		panel2.setVisible(false); 
 		panel3.remove(okButton);
 		panel3.add(avsluta); 
 		panel3.setVisible(true);
