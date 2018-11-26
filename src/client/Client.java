@@ -1,5 +1,7 @@
 package client;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Client{
+public class Client implements ActionListener {
     InetAddress host = InetAddress.getLoopbackAddress();
     Socket socket;
 
@@ -37,8 +39,12 @@ public class Client{
     public static void main(String[] args) {
         Client client = new Client();
     }
-    
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
 class Out extends Thread{
     Scanner scan = new Scanner(System.in);
