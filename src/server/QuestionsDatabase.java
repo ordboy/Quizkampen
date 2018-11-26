@@ -12,10 +12,10 @@ public class QuestionsDatabase {
 
 
 
-    protected String Catagory1 = "Sport";
-    protected String Catagory2 = "Geografi";
-    protected String Catagory3 = "Historia";
-    protected String Catagory4 = "cat4";
+    protected String Category1 = "Category 1";
+    protected String Category2 = "Category 2";
+    protected String Category3 = "Category 3";
+    protected String Category4 = "Category 4";
 
     protected Question question1 = new Question("Q1", "Answer1",
             "Answer2", "Answer3", "Answer4", 1);
@@ -59,25 +59,25 @@ public class QuestionsDatabase {
 
         n = n.toLowerCase();
 
-        if(n.matches("Sport")){
+        if(n.matches("Category 1")){
             CatagoryQuestions.add(question1);
             CatagoryQuestions.add(question2);
             CatagoryQuestions.add(question3);
             CatagoryQuestions.add(question1);
             Collections.shuffle(CatagoryQuestions);
-        } else if(n.matches("Geografi")){
+        } else if(n.matches("Category 2")){
             CatagoryQuestions.add(question5);
             CatagoryQuestions.add(question6);
             CatagoryQuestions.add(question7);
             CatagoryQuestions.add(question8);
             Collections.shuffle(CatagoryQuestions);
-        } else if(n.matches("Historiak")){
+        } else if(n.matches("Category 3")){
             CatagoryQuestions.add(question9);
             CatagoryQuestions.add(question10);
             CatagoryQuestions.add(question11);
             CatagoryQuestions.add(question12);
             Collections.shuffle(CatagoryQuestions);
-        } else if(n.matches("cat4")){
+        } else if(n.matches("Category 4")){
             CatagoryQuestions.add(question13);
             CatagoryQuestions.add(question14);
             CatagoryQuestions.add(question15);
