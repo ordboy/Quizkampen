@@ -1,183 +1,175 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
-/**
- *
- * @author sarko
- */
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.CardLayout;
-import java.util.Random;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JOptionPane;
+import server.Question;
 
-public class GUI extends JFrame{
-	JPanel p=new JPanel();
-	CardLayout cards=new CardLayout();
-	int numQs;
-	int wrongs=0;
-	int total=0;
-	
-	String[][] answers={
-		{"Portugisiska", "spanska", "Italienska"," English"},
-		{"24","32","36","64"},
-		{"1935","1945","1955","1965"},
-		{"Jorden"," Jupiter "," Mars "," Uranus"},
-		{"Thomas Edison","Louis Pasteur","Alexander Fleming","George Orwell"},
-		{"Sann","Falsk"},
-		{"Sann","Falsk"},
-		{"Brand","mörker","vind"," Spindlar"},
-		{"Volleyball","Basketball","Hockey","Fotball"},
-		{"Italien ","Spanien","France"," Schweiz"},
-		{"Sann","Falsk"},
-		{"Apollo 7","Apollo 9","Apollo 11","Apollo 13"},
-		{"Slovakien","Ukraina", "Ungern"," Ryssland"},
-		{"Sann","Falsk"},
-		{"Britney Spears","Scarlett Johansson","Mila Kunis","Angelina Jolie"},
-		{"Steve Rogers","Chris Hemsworth","Tony Stark","Toby Jenkins"},
-		{"Labrosse","Orleans","Sandillon","Attray"},
-	};
-	
-	GUIQuestion questions[]={
-		
-		new GUIQuestion(
-			"Vilket språk talas i Brasilien?",
-			answers[0],
-			0,this
-		),
-		new GUIQuestion(
-			"Hur många svarta rutor finns på ett schackbräde?",
-			answers[1],
-			1,this
-		),
-		new GUIQuestion(
-			"Vilket år dog Albert Einstein??",
-			answers[2],
-			2,this
-		),
-		new GUIQuestion(
-			"Vilket är den största planet i solsystemet?",
-			answers[3],
-			1,this
-		),
-		new GUIQuestion(
-			"Vem uppfann Penicillin?",
-			answers[4],
-			2,this
-		),
-		new GUIQuestion(
-			"Sant om falskt: Volleyboll uppfanns som ett spel för affärsmän.",
-			answers[5],
-			0,this
-		),
-		new GUIQuestion(
-			"Sant om falskt: Bara amerikaner och sovjeter har gått på månen.",
-			answers[6],
-			1,this
-		),
-		new GUIQuestion(
-			"Anemofobi är rädslan för vad?",
-			answers[7],
-			2,this
-		),
-		new GUIQuestion(
-			"Vilket spel spelas med fem spelare på vardera sidan?",
-			answers[8],
-			1,this
-		),
-		new GUIQuestion(
-			"Vilket av följande länder är inlands?",
-			answers[9],
-			3,this
-		),
-		new GUIQuestion(
-			"Sant eller falskt: Den Oscar-vinnande filmen A Beautiful Mind (2001) handlar om schizofreni.",
-			answers[10],
-			0,this
-		),
-		new GUIQuestion(
-			"Vilket Apollo-uppdrag landade de första människorna på månen?",
-			answers[11],
-			2,this
-		),
-		new GUIQuestion(
-			"Reaktorn på platsen för kärnkraftsolyckan i Tjernobyl är nu i vilket land?",
-			answers[12],
-			1,this
-		),
-		new GUIQuestion(
-			"Sant eller falskt: Tangonen härstammar i Argentina.",
-			answers[13],
-			0,this
-		),
-		new GUIQuestion(
-			"Vem spelar Lara Croft i Tomb Raider-serien av filmer?",
-			answers[14],
-			3,this
-		),
-		new GUIQuestion(
-			"Vad är Iron Mans riktiga namn?",
-			answers[15],
-			2,this
-		)
-		,
-		new GUIQuestion(
-			"Joan of Arc är också känd som Maid of Where?",
-			answers[16],
-			1,this
-		)
-	};
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-	public static void main(String args[]){
-        GUI quiz = new GUI();
-	}
-	
+public class GUI extends JFrame implements ActionListener{
+
+	private JPanel panel1 = new JPanel();			//panel1 har en JLabel (dvs bara text)
+	private JPanel panel2 = new JPanel();			//panel2 har svars- eller kategoriknappar
+	private JPanel panel3 = new JPanel();			//panel3 har okButton eller Avsluta
+
+	private JLabel label1 = new JLabel("Väntar på motspelare");
+
+	private JButton okButton = new JButton("Nästa");
+	private JButton quitButton = new JButton("Avsluta");
+
+	private List<JButton> jbuttonAnswers = new ArrayList<>();	//Lista med alla svarsknappar
+	private List<JButton> jbuttonCatagories = new ArrayList<>();		//Lista med alla kategoriknappar
+
 	public GUI(){
-		super("Corevia");
-		setResizable(true);
-		setSize(650,300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		p.setLayout(cards);
-		numQs=questions.length;
-		for(int i=0;i<numQs;i++){
-			p.add(questions[i],"q"+i);
-		}
-		Random r=new Random();
-		int i=r.nextInt(numQs);
-		cards.show(p,"q"+i);
-		add(p);
+
+		setLayout(new GridLayout(2, 2));
+
+		label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 30));
+		panel1.add(label1);
+
+		add(panel1);
+		panel1.setVisible(true);
+		add(panel2);
+		panel2.setVisible(false);
+		add(panel3);
+		panel3.setVisible(false);
+
+		int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3);
+		int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+
+		setSize(sizeWidth, sizeHeight);
+
+		int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
+		int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2);
+		setLocation(locWidth, locHeight);
 		setVisible(true);
 	}
-	
-	public void next(){
-		if((total-wrongs)==numQs){
-			showSummary();
-		}else{
-			Random r=new Random();
-			boolean found=false;
-			int i=0;
-			while(!found){
-				i=r.nextInt(numQs);
-				if(!questions[i].used){
-					found=true;
-				}
-			}
-			cards.show(p,"q"+i);
-		}
+
+	public void waitingForOtherPlayer() {
+		label1.setText("Väntar på Motspelare");
+		panel2.setVisible(false);
+		panel3.setVisible(false);
+		revalidate();
 	}
-	
-	public void showSummary(){
-		JOptionPane.showMessageDialog(null,"Här är din sammanfattning:"+
-			"\nYou answered "+wrongs+ " fel svar" +
-			"\nYou answered "+(total-wrongs)+ " rätt" +
-			"\nGiving a correct answer chance: \t\t"+(int)(((float)(total-wrongs)/total)*100)+"%"
-		);
-		System.exit(0);
+
+
+	public void setupCategoryGUI(String[] categories, Client client) {
+		label1.setText("Välj kategori");
+		panel2.setVisible(true);
+		panel3.setVisible(false);
+
+		panel2.setLayout(new FlowLayout());
+
+		for (int i=0; i < categories.length; i++) {
+			JButton b = new JButton();
+			b.setFont(new Font("Arial", Font.BOLD, 15)); // properties fil?
+			b.setText(categories[i]);
+			b.addActionListener(client);
+			jbuttonCatagories.add(b);
+			panel2.add(b);
+		}
+
+		revalidate();
+	}
+	public void removeCategoryGUI() {
+
+		for (JButton b : jbuttonCatagories) {
+			panel2.remove(b);
+		}
+
+		panel2.revalidate();
+		panel2.repaint();
+	}
+
+	public void setupQuestionGUI(Question question, Client client) {
+
+		panel2.setVisible(true);
+		panel3.setVisible(false);
+		panel3.add(okButton);
+
+		panel2.setLayout(new GridLayout(2, 2));
+
+		//shuffle answers
+		List<String> randomizeList = Arrays.asList(question.getAnswers());
+		Collections.shuffle(randomizeList);
+
+		for (int i=0; i < randomizeList.size(); i++) {
+			JButton b = new JButton();
+			b.setFont(new Font("Arial", Font.BOLD, 15));
+			b.setText(randomizeList.get(i));
+			b.addActionListener(client);
+			b.setBackground(null);
+
+			jbuttonAnswers.add(b);
+			panel2.add (b);
+		}
+
+		revalidate();
+	}
+	public void removeQuestionGUI() {
+
+		for (JButton b : jbuttonAnswers) {
+			panel2.remove(b);
+		}
+
+		panel2.revalidate();
+		panel2.repaint();
+	}
+
+
+	public void setupScoreGUI(int i1, int i2){
+
+		panel2.setVisible(false);
+		panel3.remove(okButton);
+		panel3.add(quitButton);
+		panel3.setVisible(true);
+
+		label1.setFont(new Font("Arial", Font.BOLD, 30));
+		label1.setText("Spelare ett: " + i1 + "  -  Spelare två: " + i2);
+		revalidate();
+		repaint();
+	}
+
+
+	public JPanel getPanel1() {
+		return panel1;
+	}
+
+	public JPanel getPanel2() {
+		return panel2;
+	}
+
+	public JPanel getPanel3() {
+		return panel3;
+	}
+
+	public JLabel getLabel1() {
+		return label1;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public JButton getQuitButton() {
+		return quitButton;
+	}
+
+	public List<JButton> getJbuttonCatagories() {
+		return jbuttonCatagories;
+	}
+
+	public List<JButton> getJbuttonAnswers() {
+		return jbuttonAnswers;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println("should not be here");
 	}
 }
