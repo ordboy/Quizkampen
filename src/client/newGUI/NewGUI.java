@@ -82,12 +82,8 @@ public NewGUI() {
             NewGUI frameTabel = new NewGUI();
  
     }
-
-    
     }
 
-
-    
     public static void main(String[] args){
          NewGUI g = new NewGUI();
     }

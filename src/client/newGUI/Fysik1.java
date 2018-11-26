@@ -71,7 +71,7 @@ public Fysik1() {
          button4.addActionListener(this);
          
    
-         add(label);
+      
          add(p); 
          pack(); 
          setVisible(true);
