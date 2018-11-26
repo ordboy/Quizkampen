@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class newframe extends JFrame {
+public class newframe extends JFrame implements ActionListener{
 
 public static void main(String[] args) {
 newframe frameTabel = new newframe();
@@ -50,17 +50,11 @@ newframe frameTabel = new newframe();
          
         p.setLayout(new BorderLayout());
         p.add(panel, BorderLayout.CENTER);
-         
-//         panel.add(val1, BorderLayout.NORTH); 
-//         panel.add(val2, BorderLayout.SOUTH);
-//         panel.add(val3, BorderLayout.WEST);
-//         panel.add(val4, BorderLayout.EAST);
-           
-//         p.add(panel, BorderLayout.SOUTH);
-//         val1.addActionListener((ActionListener) this);
-//         val2.addActionListener((ActionListener) this);
-//         val3.addActionListener((ActionListener) this);
-//         val4.addActionListener((ActionListener) this);
+
+         val1.addActionListener((ActionListener) this);
+         val2.addActionListener((ActionListener) this);
+         val3.addActionListener((ActionListener) this);
+         val4.addActionListener((ActionListener) this);
 
      
        
@@ -68,13 +62,10 @@ newframe frameTabel = new newframe();
         add(p);
         setSize(400,100);
         setLocation(500,280);
-//        panel.setLayout (null);
 
-//        welcome.setBounds(70,50,150,60);
-//        panel.add(welcome);
         
         setVisible(true);
-//        getContentPane().add(panel);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 }

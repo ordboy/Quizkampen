@@ -32,7 +32,7 @@ public class NewGUI extends JFrame implements ActionListener{
       JLabel label;
       JPanel p = new JPanel();
       JButton button1, button2 ,button3 ,button4, loggning;
-//     TextField text = new TextField("Namn: ", 20);
+
      
 public NewGUI() {
     
@@ -80,14 +80,9 @@ public NewGUI() {
         
          if (e.getSource() == loggning){
             NewGUI frameTabel = new NewGUI();
-//         loggning.setText("Welcome" + frameTabel );
-
-          
-             
+ 
     }
-//        if (e.getSource() == loggning){
-//         System.exit(0);
-//         }
+
     
     }
 
