@@ -12,172 +12,220 @@ package client;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
+import javax.swing.JButton;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class GUI extends JFrame{
-	JPanel p=new JPanel();
-	CardLayout cards=new CardLayout();
-	int numQs;
-	int wrongs=0;
-	int total=0;
-	
-	String[][] answers={
-		{"Portugisiska", "spanska", "Italienska"," English"},
-		{"24","32","36","64"},
-		{"1935","1945","1955","1965"},
-		{"Jorden"," Jupiter "," Mars "," Uranus"},
-		{"Thomas Edison","Louis Pasteur","Alexander Fleming","George Orwell"},
-		{"Sann","Falsk"},
-		{"Sann","Falsk"},
-		{"Brand","mörker","vind"," Spindlar"},
-		{"Volleyball","Basketball","Hockey","Fotball"},
-		{"Italien ","Spanien","France"," Schweiz"},
-		{"Sann","Falsk"},
-		{"Apollo 7","Apollo 9","Apollo 11","Apollo 13"},
-		{"Slovakien","Ukraina", "Ungern"," Ryssland"},
-		{"Sann","Falsk"},
-		{"Britney Spears","Scarlett Johansson","Mila Kunis","Angelina Jolie"},
-		{"Steve Rogers","Chris Hemsworth","Tony Stark","Toby Jenkins"},
-		{"Labrosse","Orleans","Sandillon","Attray"},
-	};
-	
-	GUIQuestion questions[]={
-		
-		new GUIQuestion(
-			"Vilket språk talas i Brasilien?",
-			answers[0],
-			0,this
-		),
-		new GUIQuestion(
-			"Hur många svarta rutor finns på ett schackbräde?",
-			answers[1],
-			1,this
-		),
-		new GUIQuestion(
-			"Vilket år dog Albert Einstein??",
-			answers[2],
-			2,this
-		),
-		new GUIQuestion(
-			"Vilket är den största planet i solsystemet?",
-			answers[3],
-			1,this
-		),
-		new GUIQuestion(
-			"Vem uppfann Penicillin?",
-			answers[4],
-			2,this
-		),
-		new GUIQuestion(
-			"Sant om falskt: Volleyboll uppfanns som ett spel för affärsmän.",
-			answers[5],
-			0,this
-		),
-		new GUIQuestion(
-			"Sant om falskt: Bara amerikaner och sovjeter har gått på månen.",
-			answers[6],
-			1,this
-		),
-		new GUIQuestion(
-			"Anemofobi är rädslan för vad?",
-			answers[7],
-			2,this
-		),
-		new GUIQuestion(
-			"Vilket spel spelas med fem spelare på vardera sidan?",
-			answers[8],
-			1,this
-		),
-		new GUIQuestion(
-			"Vilket av följande länder är inlands?",
-			answers[9],
-			3,this
-		),
-		new GUIQuestion(
-			"Sant eller falskt: Den Oscar-vinnande filmen A Beautiful Mind (2001) handlar om schizofreni.",
-			answers[10],
-			0,this
-		),
-		new GUIQuestion(
-			"Vilket Apollo-uppdrag landade de första människorna på månen?",
-			answers[11],
-			2,this
-		),
-		new GUIQuestion(
-			"Reaktorn på platsen för kärnkraftsolyckan i Tjernobyl är nu i vilket land?",
-			answers[12],
-			1,this
-		),
-		new GUIQuestion(
-			"Sant eller falskt: Tangonen härstammar i Argentina.",
-			answers[13],
-			0,this
-		),
-		new GUIQuestion(
-			"Vem spelar Lara Croft i Tomb Raider-serien av filmer?",
-			answers[14],
-			3,this
-		),
-		new GUIQuestion(
-			"Vad är Iron Mans riktiga namn?",
-			answers[15],
-			2,this
-		)
-		,
-		new GUIQuestion(
-			"Joan of Arc är också känd som Maid of Where?",
-			answers[16],
-			1,this
-		)
-	};
+public class GUI extends JFrame implements ActionListener{
 
-	public static void main(String args[]){
-        GUI quiz = new GUI();
-	}
+	private JPanel panel1 = new JPanel();			//panel1 har en JLabel (dvs bara text)
+	private JPanel panel2 = new JPanel();			//panel2 har svars- eller kategoriknappar
+	private JPanel panel3 = new JPanel();			//panel3 har okButton eller Avsluta
 	
+	private JLabel label1 = new JLabel("Väntar på att spel ska starta");
+	
+	
+	
+	private JButton bA1 = new JButton();
+	private JButton bA2 = new JButton();
+	private JButton bA3 = new JButton();
+	private JButton bA4 = new JButton();
+	private JButton[] svarsAlternativ = {bA1, bA2, bA3, bA4};	//Lista med alla svarsknappar
+        
+//	private JButton bRa1 = new JButton();
+//	private JButton bRa2 = new JButton();
+//	private JButton bRa3 = new JButton();
+//	private JButton bRa4 = new JButton();
+        
+//	private JButton[] roundButt = {bRa1, bRa2, bRa3, bRa4};	//Lista med alla rondknappar
+	
+	
+	private JButton bC1 = new JButton();
+	private JButton bC2 = new JButton();
+	private JButton bC3 = new JButton();
+    private JButton bC4 = new JButton();
+
+    private JButton[] kategoriAlternativ = {bC1, bC2, bC3,bC4};		//Lista med alla kategoriknappar
+	
+	
+	
+	private JButton okButton = new JButton("Tryck för att gå vidare");
+	private JButton avsluta = new JButton("Avsluta");
+
+	
+
 	public GUI(){
-		super("Corevia");
-		setResizable(true);
-		setSize(650,300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		p.setLayout(cards);
-		numQs=questions.length;
-		for(int i=0;i<numQs;i++){
-			p.add(questions[i],"q"+i);
-		}
-		Random r=new Random();
-		int i=r.nextInt(numQs);
-		cards.show(p,"q"+i);
-		add(p);
-		setVisible(true);
+		setLayout(new GridLayout(3, 1));
+		
+		label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 15));
+		panel1.add(label1);
+		
+		add(panel1); panel1.setVisible(true); 
+		add(panel2); panel2.setVisible(false);
+		add(panel3); panel3.setVisible(false);
+		
+		int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5);
+		int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+		
+		setSize(sizeWidth, sizeHeight);
+		
+		int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
+		int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2);
+		setLocation(locWidth, locHeight);
+		setVisible(true); 
 	}
 	
-	public void next(){
-		if((total-wrongs)==numQs){
-			showSummary();
-		}else{
-			Random r=new Random();
-			boolean found=false;
-			int i=0;
-			while(!found){
-				i=r.nextInt(numQs);
-				if(!questions[i].used){
-					found=true;
-				}
-			}
-			cards.show(p,"q"+i);
+
+
+	public void waitingForOpponent() {
+		label1.setText("Motståndare spelar");
+		panel2.setVisible(false);
+		panel3.setVisible(false);
+		revalidate();
+	}
+
+	
+	public void setupCategoryGUI() {
+		label1.setText("Välj kategori");
+		panel2.setVisible(true);
+		panel3.setVisible(false);
+		
+		panel2.setLayout(new FlowLayout());
+		
+		for (JButton b : kategoriAlternativ) {
+			b.setFont(new Font("Arial", Font.BOLD, 15));
+			panel2.add(b);
 		}
+		
+		revalidate();
 	}
 	
-	public void showSummary(){
-		JOptionPane.showMessageDialog(null,"Här är din sammanfattning:"+
-			"\nYou answered "+wrongs+ " fel svar" +
-			"\nYou answered "+(total-wrongs)+ " rätt" +
-			"\nGiving a correct answer chance: \t\t"+(int)(((float)(total-wrongs)/total)*100)+"%"
-		);
-		System.exit(0);
+
+
+	public void removeCategoryGUI() {
+		
+		for (JButton b : kategoriAlternativ) {
+			panel2.remove(b);
+		}
+		
+		panel2.revalidate();
+		panel2.repaint();
+	}
+	
+
+	public void setupQuestionGUI() {
+		
+		panel2.setVisible(true);
+		panel3.setVisible(false);
+		panel3.add(okButton);
+
+		panel2.setLayout(new GridLayout(2, 2));
+		
+		for (JButton b : svarsAlternativ) {
+			b.setFont(new Font("Arial", Font.BOLD, 15));
+			panel2.add(b);
+		}
+		
+		revalidate();
+	}
+
+	public void removeQuestionGUI() {
+		
+		for (JButton b : svarsAlternativ) {
+			panel2.remove(b);
+		}
+		
+		panel2.revalidate();
+		panel2.repaint();
+	}
+	
+
+	public void setupScoreGUI(int i1, int i2){
+		
+		panel2.setVisible(false);
+		panel3.remove(okButton);
+		panel3.add(avsluta); 
+		panel3.setVisible(true);
+		
+		label1.setText("Spelare ett: " + i1 + "  -  Spelare två: " + i2);
+		revalidate();
+		repaint();
+	}
+
+
+	
+	public JPanel getPanel1() {
+		return panel1;
+	}
+
+	public JPanel getPanel2() {
+		return panel2;
+	}
+
+	public JPanel getPanel3() {
+		return panel3;
+	}
+
+	public JLabel getLabel1() {
+		return label1;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public JButton getbA1() {
+		return bA1;
+	}
+
+	public JButton getbA2() {
+		return bA2;
+	}
+
+	public JButton getbA3() {
+		return bA3;
+	}
+
+	public JButton getbA4() {
+		return bA4;
+	}
+
+	public JButton getbC1() {
+	    return bC1;
+	}
+
+	public JButton getbC2() {
+		return bC2;
+	}
+
+	public JButton getbC3() {
+		return bC3;
+	}
+    public JButton getbC4() {
+        return bC4;
+    }
+	public JButton getAvsluta() {
+		return avsluta;
+	}
+	
+	public JButton[] getKategoriAlternativ() {
+		return kategoriAlternativ;
+	}
+
+	public JButton[] getSvarsAlternativ() {
+		return svarsAlternativ;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
 	}
 }
