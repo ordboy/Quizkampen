@@ -5,6 +5,7 @@ import java.util.List;
 public class Category {
     private String Name;
     private List<Question> Questions;
+    static final long serialVersionUID = 42L;
 
     public Category(String name, List<Question> questions){
         this.Name = name;
