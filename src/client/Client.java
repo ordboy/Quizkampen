@@ -27,7 +27,7 @@ public class Client implements ActionListener {
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 
-	private int port = 4200;
+	private int port = 55555;
 	private String ip = "127.0.0.1";
 	private Socket connection;
 
