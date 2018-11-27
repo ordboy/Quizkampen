@@ -12,7 +12,7 @@ import java.net.Socket;
 
 public class ServerListener {
 
-    private int port = 4200;
+    private int port = 55555;
     private Socket connection;
     private ServerSocket serverSocket;
 
