@@ -1,7 +1,7 @@
 package server;
 
 import java.io.Serializable;
-
+//aselfnsgsvf
 
 public class WaitModel implements Serializable {
     private String score;
