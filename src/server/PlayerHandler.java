@@ -44,9 +44,8 @@ public class PlayerHandler {
 		propertiesLoad();
 		
 		p1.sendObject("player1");
-		p1.sendRoundScoreP1("player1");
 		p2.sendObject("player2");
-		p2.sendObject(waitModel(p1, p2));
+		p2.sendObject(new WaitModel(String.valueOf(p2.getScore())));
 
 		runGame();
 		
@@ -88,8 +87,8 @@ public class PlayerHandler {
 		
 		sendCategoryChoices(p1); 
 		sendQuestions(p1, category);
-		
-		p1.sendObject(waitModel(p1, p2););
+
+		p1.sendObject(new WaitModel(String.valueOf(p1.getScore())));
 		sendQuestions(p2);
 
 		
@@ -99,8 +98,8 @@ public class PlayerHandler {
 
 		sendCategoryChoices(p2);
 		sendQuestions(p2, category);
-		
-		p2.sendObject("wait");
+
+		p2.sendObject(new WaitModel(String.valueOf(p2.getScore())));
 		sendQuestions(p1);
 	}
 	
