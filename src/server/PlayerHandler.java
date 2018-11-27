@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import server.WaitModel;
+import server.Player;
 
 /**
  *
@@ -42,16 +44,24 @@ public class PlayerHandler {
 		propertiesLoad();
 		
 		p1.sendObject("player1");
+		p1.sendRoundScoreP1("player1");
 		p2.sendObject("player2");
-		p2.sendObject("wait");
+		p2.sendObject(waitModel(p1, p2));
 
 		runGame();
 		
 		sendScore(p1, p2);	
 		
 	}
-	
-	
+
+	public void waitModel(Player p1, Player p2){
+		String waiting = "waiting";
+		p1.getScore();
+		p2.getScore();
+	}
+
+
+
 	private void runGame() {
 		
 		if (rounds > 1 && rounds % 2 == 0) {
@@ -79,13 +89,14 @@ public class PlayerHandler {
 		sendCategoryChoices(p1); 
 		sendQuestions(p1, category);
 		
-		p1.sendObject("wait");
+		p1.sendObject(waitModel(p1, p2););
 		sendQuestions(p2);
+
 		
 	}
 	
 	private void roundStartPlayer2() {
-		
+
 		sendCategoryChoices(p2);
 		sendQuestions(p2, category);
 		
@@ -138,9 +149,17 @@ public class PlayerHandler {
 			
 		}
 	}
-	
 
-	
+//	public void sendRoundScoreP1(Player p1){
+//		this.scores[0] = p1.getScore();
+//		this.p1.sendObject(scores);
+//	}
+  //
+//	public void sendRoundScoreP2(Player p2){
+//		this.scores[1] = p2.getScore();
+//		this.p1.sendObject(scores);
+//	}
+//
 	
 	private void sendScore(Player p1, Player p2) {
 		

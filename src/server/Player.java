@@ -76,5 +76,8 @@ public class Player {
 	protected int getScore() {
 		return score;
 	}
-	
+
+
+	public void sendRoundScoreP1(String player1) {
+	}
 }
