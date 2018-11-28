@@ -25,13 +25,13 @@ public class GUI extends JFrame implements ActionListener{
     private JPanel panel2 = new JPanel();			//panel2 har svars- eller kategoriknappar
     private JPanel panel3 = new JPanel();			//panel3 har okButton eller Avsluta
 
-    private JLabel label1 = new JLabel("Väntar på att spel ska starta");
+    private JLabel label1 = new JLabel("Spelet startar strax!");
 
-    private JButton okButton = new JButton("Tryck för att gå vidare");
-    private JButton avsluta = new JButton("Avsluta");
+    private JButton okButton = new JButton("Nästa Fråga");
+    private JButton exit = new JButton("Avsluta");
 
-    private List<JButton> svarsAlternativ = new ArrayList<>();	//Lista med alla svarsknappar
-    private List<JButton> kategoriAlternativ= new ArrayList<>();		//Lista med alla kategoriknappar
+    private List<JButton> answerAlt = new ArrayList<>();	//Lista med alla svarsknappar
+    private List<JButton> catAlt = new ArrayList<>();		//Lista med alla kategoriknappar
 
     public GUI(){
 
@@ -50,13 +50,13 @@ public class GUI extends JFrame implements ActionListener{
         add(panel2); panel2.setVisible(false);
         add(panel3); panel3.setVisible(false);
         
-        int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5);
-        int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+        int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2 );
+        int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() /4);
 
         setSize(sizeWidth, sizeHeight);
 
-        int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
-        int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2);
+        int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() /2);
+        int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() /4);
         setLocation(locWidth, locHeight);
         setVisible(true);
     }
@@ -80,10 +80,10 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < categories.length; i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Arial", Font.BOLD, 15));
+            b.setFont(new Font("Times New Roman", Font.BOLD, 18));
             b.setText(categories[i]);
             b.addActionListener(client);
-            kategoriAlternativ.add(b);
+            catAlt.add(b);
             panel2.add(b);
         }
 
@@ -91,7 +91,7 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void removeCategoryGUI() {
 
-        for (JButton b : kategoriAlternativ) {
+        for (JButton b : catAlt) {
             panel2.remove(b);
         }
 
@@ -113,12 +113,12 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < shuffledList.size(); i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Arial", Font.BOLD, 15));
+            b.setFont(new Font("Times New Roman", Font.BOLD, 18));
             b.setText(shuffledList.get(i));
             b.addActionListener(client);
             b.setBackground(null);
 
-            svarsAlternativ.add(b);
+            answerAlt.add(b);
             panel2.add (b);
         }
 
@@ -126,10 +126,11 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void removeQuestionGUI() {
 
-        for (JButton b : svarsAlternativ) {
+        for (JButton b : answerAlt) {
             panel2.remove(b);
+            
         }
-
+        
         panel2.revalidate();
         panel2.repaint();
     }
@@ -139,10 +140,10 @@ public class GUI extends JFrame implements ActionListener{
 
         panel2.setVisible(false);
         panel3.remove(okButton);
-        panel3.add(avsluta);
+        panel3.add(exit);
         panel3.setVisible(true);
 
-        label1.setFont(new Font("Arial", Font.BOLD, 30));
+        label1.setFont(new Font("Times New Roman", Font.BOLD, 18));
         label1.setText("Spelare ett: " + i1 + " poäng  -  Spelare två: " + i2 + " poäng");
         revalidate();
         repaint();
@@ -169,16 +170,16 @@ public class GUI extends JFrame implements ActionListener{
         return okButton;
     }
 
-    public JButton getAvsluta() {
-        return avsluta;
+    public JButton getExit() {
+        return exit;
     }
 
-    public List<JButton> getKategoriAlternativ() {
-        return kategoriAlternativ;
+    public List<JButton> getCatAlt() {
+        return catAlt;
     }
 
-    public List<JButton> getSvarsAlternativ() {
-        return svarsAlternativ;
+    public List<JButton> getAnswerAlt() {
+        return answerAlt;
     }
 
     @Override

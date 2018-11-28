@@ -6,17 +6,9 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.*;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-
-import client.GUI;
 import model.*;
 
 
@@ -84,11 +76,11 @@ public class Client implements ActionListener {
 			try {
 				fromServer = (String) in.readObject();
 				if(fromServer.equals("player1")) {
-					gui.setTitle("Spelare ett");
+					gui.setTitle("Spelare 1");
 					break;
 				}
 				else if(fromServer.equals("player2")) {
-					gui.setTitle("Spelare två");
+					gui.setTitle("Spelare 2");
 					break;
 				}
 			} catch (ClassNotFoundException e) {
@@ -106,27 +98,27 @@ public class Client implements ActionListener {
 			try {
 				objFromServer = in.readObject();
 				if (objFromServer instanceof model.WaitModel) {
-					model.WaitModel wm = (model.WaitModel) objFromServer; //String ("wait")
+					model.WaitModel wm = (model.WaitModel) objFromServer; //String ("wait") + score efter varje rond
 					if (wm.getStatus().equalsIgnoreCase("wait")) {
 						gui.waitingForOpponent(wm.getScore());
 					}
 				}
 				else if (objFromServer instanceof String[]) {			//Categories
-                                    gui.setupCategoryGUI((String[])objFromServer,this);
+					gui.setupCategoryGUI((String[])objFromServer,this);
 					awaitReady();
 					gui.removeCategoryGUI();
 				}
 				else if (objFromServer instanceof Question) {			//Question
                                                                        
-                                        setupQuestion();
+					setupQuestion();
 					awaitReady();
 					gui.removeQuestionGUI();
 				}
-				else if (objFromServer instanceof int[]) {
+				else if (objFromServer instanceof int[]) { 			//score
                                     
 					int[] scores =  (int[]) objFromServer;
 					gui.setupScoreGUI(scores[0], scores[1]);
-					gui.getAvsluta().addActionListener(this);
+					gui.getExit().addActionListener(this);
 				}
 				else if (objFromServer == null) {
 					System.out.println("objFromServer is null...");
@@ -149,7 +141,7 @@ public class Client implements ActionListener {
 
 		gui.getOkButton().addActionListener(this);
 		gui.getPanel3().setVisible(false);
-		gui.getSvarsAlternativ();
+		gui.getAnswerAlt();
 
 		gui.getLabel1().setText(question.getQuestion());
 		gui.getPanel1().revalidate();
@@ -166,7 +158,7 @@ public class Client implements ActionListener {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				System.out.println("Sleep interrupted for while(!ready)...");
+				e.printStackTrace();
 			}
 		}
 		try {
@@ -188,17 +180,17 @@ public class Client implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// if source is a button do following
-		if (gui.getKategoriAlternativ().contains((e.getSource()))) {
-			for (JButton b : gui.getKategoriAlternativ()) {
+		if (gui.getCatAlt().contains((e.getSource()))) {
+			for (JButton b : gui.getCatAlt()) {
 				if (e.getSource() == b) {
 					sendTextOfButton(b);
 				}
 			}
 			ready = true;
 		}
-		else if(gui.getSvarsAlternativ().contains((e.getSource()))) {
+		else if(gui.getAnswerAlt().contains((e.getSource()))) {
 
-			for (JButton b : gui.getSvarsAlternativ()) {
+			for (JButton b : gui.getAnswerAlt()) {
 				if (b.getText().equals(question.getCorrectAnswer())) {
 					b.setBackground(Color.GREEN);
 					gui.getPanel2().repaint();
@@ -209,7 +201,7 @@ public class Client implements ActionListener {
 						gui.getPanel2().repaint();
 					}
 					sendTextOfButton(b);
-					for (JButton bA : gui.getSvarsAlternativ()) {
+					for (JButton bA : gui.getAnswerAlt()) {
 						bA.removeActionListener(this);
 					}
 					gui.getPanel3().setVisible(true);
@@ -222,7 +214,7 @@ public class Client implements ActionListener {
 			gui.getPanel3().revalidate();
 			ready = true;
 		}
-		if (e.getSource() == gui.getAvsluta()) {
+		if (e.getSource() == gui.getExit()) {
 			System.exit(0);
 		}
 	}
