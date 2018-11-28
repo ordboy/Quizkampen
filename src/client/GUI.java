@@ -128,8 +128,9 @@ public class GUI extends JFrame implements ActionListener{
 
         for (JButton b : svarsAlternativ) {
             panel2.remove(b);
+            
         }
-
+        
         panel2.revalidate();
         panel2.repaint();
     }
