@@ -37,7 +37,7 @@ public class PlayerHandler {
 	
 	
 	public PlayerHandler(Player p1, Player p2) {
-		
+//		
 		this.p1 = p1;
 		this.p2 = p2;
 		
@@ -48,9 +48,10 @@ public class PlayerHandler {
 		p2.sendObject("player2");
 		p2.sendObject(new WaitModel(String.valueOf(p2.getScore())));
 
-		runGame();
+		runGame(); // här sätts spelet igång egentligen
 		
-		sendScore(p1, p2);	
+		sendScore(p1, p2);	// efter spelet är slut skickas scores
+//                
 		
 	}
 

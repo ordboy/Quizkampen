@@ -14,7 +14,7 @@ public class ServerListener {
 
     private int port = 55555;
     private Socket connection;
-    private ServerSocket serverSocket;
+    private ServerSocket serverSocket; // lyssnar efter connection
 
     private ServerListener() {
 
@@ -29,13 +29,13 @@ public class ServerListener {
             try {
                 System.out.println("Waiting for clients to connect...");
 
-                connection = serverSocket.accept();
+                connection = serverSocket.accept(); // accepterar första anslutningen, skapar en player "server" åt client 1
 
                 Player p1 = new Player(connection);
                 System.out.println("Connected to player 1: " +
                         connection.getInetAddress().getHostName());
 
-                Player p2 = new Player(serverSocket.accept());
+                Player p2 = new Player(serverSocket.accept()); // accepterar andra anslutningen, skapar player2 åt client 
                 System.out.println("Connected to player 2: " +
                         connection.getInetAddress().getHostName());
 
@@ -44,7 +44,7 @@ public class ServerListener {
                 new Thread(new Runnable() {
 
                     @Override
-                    public void run() {
+                    public void run() {                         // kör ny playerhandler med de nya spelarna ihopparade
                         new PlayerHandler(p1, p2);
                     }
 
