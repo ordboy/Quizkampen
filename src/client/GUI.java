@@ -32,8 +32,10 @@ public class GUI extends JFrame implements ActionListener{
 
     private List<JButton> svarsAlternativ = new ArrayList<>();	//Lista med alla svarsknappar
     private List<JButton> kategoriAlternativ= new ArrayList<>();		//Lista med alla kategoriknappar
-
+    
+    Color[] c = {new Color(0x99, 0x00, 0x99),new Color(0xfd, 0x59, 0x56),new Color(0xfd, 0xdc, 0x5c),new Color(0x4f, 0x73, 0x8e)};
     public GUI(){
+        
 
         setLayout(new GridLayout(3, 1));
 
@@ -48,7 +50,7 @@ public class GUI extends JFrame implements ActionListener{
         panel3.setOpaque(true);
         label1.setOpaque(true);
         this.getContentPane().setBackground(new java.awt.Color(153, 255, 153));
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);   // la till pallar inte stänga allt hela tiden
 //        panel2.setForeground(Color.pink);
         
         this.setBackground(new java.awt.Color(153, 255, 153));
@@ -72,7 +74,7 @@ public class GUI extends JFrame implements ActionListener{
     public void waitingForOpponent(String score) {
         
         label1.setText("Motståndare spelar : " + "du har " + score + " poäng");
-        
+        label1.setForeground(Color.red);
         panel2.setVisible(false);
         panel3.setVisible(false);
         revalidate();
@@ -90,6 +92,8 @@ public class GUI extends JFrame implements ActionListener{
             JButton b = new JButton();
             b.setFont(new Font("Arial", Font.BOLD, 15));
             b.setText(categories[i]);
+            
+            b.setBackground(c[i]);
             b.addActionListener(client);
             kategoriAlternativ.add(b);
             panel2.add(b);
@@ -151,7 +155,7 @@ public class GUI extends JFrame implements ActionListener{
         panel3.add(avsluta);
         panel3.setVisible(true);
 
-        label1.setFont(new Font("Arial", Font.BOLD, 30));
+        label1.setFont(new Font("Arial", Font.BOLD, 20));
         label1.setText("Spelare ett: " + i1 + " poäng  -  Spelare två: " + i2 + " poäng");
         revalidate();
         repaint();

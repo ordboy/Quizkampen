@@ -113,7 +113,7 @@ public class Client implements ActionListener {
 					}
 				}
 				else if (objFromServer instanceof String[]) {			//Categories
-                                    gui.setupCategoryGUI((String[])objFromServer,this);
+                                    gui.setupCategoryGUI((String[])objFromServer,this);         
 					awaitReady();
 					gui.removeCategoryGUI();
 				}
