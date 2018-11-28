@@ -17,7 +17,7 @@ public class PlayerHandler {
 
 	private Player p1, p2;
 	
-	private DAO databas = new DAO();
+	private DAO dao = new DAO();
 	private Question question;
 	
 	Properties p = new Properties();
@@ -104,7 +104,7 @@ public class PlayerHandler {
 	
 	private void sendCategoryChoices(Player p) {    //  Hämtar frågor i form av Array, skickar denna till clientsidan, tar emot svar som processeras
 		
-		categoryChoices = databas.getCategories();
+		categoryChoices = dao.getCategories();
 		p.sendObject(categoryChoices);
 		category = p.checkClickedButton();
 		          
@@ -132,7 +132,7 @@ public class PlayerHandler {
 	private void sendQuestions(Player p, String category) {      // här sätts frågorna i frågelistan efter att en spelare har valt kategori, sen skickas frågorna en och en
            
 		         
-		fourQuestions = databas.getQuestionFromCat(category);
+		fourQuestions = dao.getQuestionFromCat(category);
 		for(int i = 0; i < questionsPerRound; i++) {
 			
 			question = fourQuestions.get(i);

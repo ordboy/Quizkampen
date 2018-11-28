@@ -54,7 +54,7 @@ public class DAO {
         );
     }
 
-	//private String[] categoryChoice = new String[3];
+	private String[] categoryChoice = new String[3];
 
     public List<Question> getQuestionFromCat(String catName){
         // hämtar kategoriera -> filterar ut den valda -> distinct ser till att kategorin som hämtas har ett unik category name -> limit ser till att bara en returneras
@@ -63,9 +63,9 @@ public class DAO {
         return category1.get(0).getQuestions();
     }
 
-   // public String[] getCategories() { // gör en array av de olika kategorierna
-   //     categoryChoice = category.stream().map(Category::getName).toArray(String[]::new);
-	//	return categoryChoice;
-    //}
+    public String[] getCategories() { // gör en array av de olika kategorierna
+        categoryChoice = category.stream().map(Category::getName).toArray(String[]::new);
+		return categoryChoice;
+    }
 
 }

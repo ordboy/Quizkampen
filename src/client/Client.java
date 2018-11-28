@@ -40,14 +40,14 @@ public class Client implements ActionListener {
 		setupWriter();
 		setupReader();
 
-		awaitingOpponent();
+		waitOnOpp();
 		InGame();
 
 	}
 
 	private void setupConnection() {
 		try {
-			connection = new Socket(ip, port);
+			connection = new Socket(ip, port); //socket
 		} catch (UnknownHostException e) {
 			System.out.println("Ingen värd hittades...");
 		} catch (IOException e) {
@@ -73,10 +73,10 @@ public class Client implements ActionListener {
 		}
 	}
 
-	private void awaitingOpponent() {
+	private void waitOnOpp() {
 		while (true) {
 			try {
-				fromServer = (String) in.readObject();
+				fromServer = (String) in.readObject(); //läser in titeln på gui
 				if(fromServer.equals("player1")) {
 					gui.setTitle("Spelare 1");
 					break;
@@ -182,7 +182,7 @@ public class Client implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// if source is a button do following.... går till den kategory man har tryckt på
-		if (gui.getCatAlt().contains((e.getSource()))) {
+		if (gui.getCatAlt().contains((e.getSource()))) { //om knappens innehåll matchar en kategori, skickas innehållet i output
 			for (JButton b : gui.getCatAlt()) {
 				if (e.getSource() == b) {
 					ButtonText(b);
@@ -190,7 +190,7 @@ public class Client implements ActionListener {
 			}
 			ready = true;
 		}
-		else if(gui.getAnswerAlt().contains((e.getSource()))) {
+		else if(gui.getAnswerAlt().contains((e.getSource()))) { // om knappens innehåll matchar ett svar, rätt svar sätts till grön knapp
 
 			for (JButton b : gui.getAnswerAlt()) {
 				if (b.getText().equals(question.getCorrectAnswer())) {
@@ -198,11 +198,11 @@ public class Client implements ActionListener {
 					gui.getPanel2().repaint();
 				}
 				if (e.getSource() == b) {
-					if (!b.getText().equals(question.getCorrectAnswer())) {
+					if (!b.getText().equals(question.getCorrectAnswer())) { //ifall svar blir fel sätt ändå rätt svar till grön samt fel knapp till röd
 						b.setBackground(Color.RED);
 						gui.getPanel2().repaint();
 					}
-					ButtonText(b);
+					ButtonText(b); // svar skickas, actionlistener tas bort. man kan bara välja svar en gång
 					for (JButton bA : gui.getAnswerAlt()) {
 						bA.removeActionListener(this);
 					}
@@ -211,7 +211,7 @@ public class Client implements ActionListener {
 				}
 			}
 		}
-		if (e.getSource() == gui.getOkButton()) {
+		if (e.getSource() == gui.getOkButton()) { // gå vidare knappen
 			gui.getPanel3().setVisible(false);
 			gui.getPanel3().revalidate();
 			ready = true;
@@ -222,7 +222,7 @@ public class Client implements ActionListener {
 	}
 
 
-	private void ButtonText(JButton b) {
+	private void ButtonText(JButton b) {  // Tar text från knapp och till playerhandler
 
 		try {
 			out.writeObject(b.getText()); out.flush();
