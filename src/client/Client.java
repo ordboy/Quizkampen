@@ -6,17 +6,10 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.*;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 
-import client.GUI;
 import model.*;
 
 
@@ -56,9 +49,9 @@ public class Client implements ActionListener {
 		try {
 			connection = new Socket(ip, port);
 		} catch (UnknownHostException e) {
-			System.out.println("Could not find host...");
+			System.out.println("Ingen värd hittades...");
 		} catch (IOException e) {
-			System.out.println("No connection to server...");
+			System.out.println("kunde inte kontakta server server...");
 		}
 	}
 	private void setupWriter() {
@@ -67,7 +60,7 @@ public class Client implements ActionListener {
 			out = new ObjectOutputStream(connection.getOutputStream());
 			out.flush();
 		} catch (IOException e) {
-			System.out.println("Could not set up OutputStream...");
+			e.printStackTrace();
 		}
 	}
 
@@ -76,7 +69,7 @@ public class Client implements ActionListener {
 		try {
 			in = new ObjectInputStream(connection.getInputStream());
 		} catch (IOException e) {
-			System.out.println("Could not set up InputStream...");
+			e.printStackTrace();
 		}
 	}
 
@@ -85,11 +78,11 @@ public class Client implements ActionListener {
 			try {
 				fromServer = (String) in.readObject();
 				if(fromServer.equals("player1")) {
-					gui.setTitle("Spelare ett");
+					gui.setTitle("Spelare 1");
 					break;
 				}
 				else if(fromServer.equals("player2")) {
-					gui.setTitle("Spelare två");
+					gui.setTitle("Spelare 2");
 					break;
 				}
 			} catch (ClassNotFoundException e) {
@@ -113,21 +106,20 @@ public class Client implements ActionListener {
 					}
 				}
 				else if (objFromServer instanceof String[]) {			//Categories
-                                    gui.setupCategoryGUI((String[])objFromServer,this);         
-					awaitReady();
+					gui.guiCatSetup((String[])objFromServer,this);
+					waitForReady();
 					gui.removeCategoryGUI();
 				}
 				else if (objFromServer instanceof Question) {			//Question
-                                                                       
-                                        setupQuestion();
-					awaitReady();
+					setupQuestion();
+					waitForReady();
 					gui.removeQuestionGUI();
 				}
 				else if (objFromServer instanceof int[]) {
                                     
 					int[] scores =  (int[]) objFromServer;
 					gui.setupScoreGUI(scores[0], scores[1]);
-					gui.getAvsluta().addActionListener(this);
+					gui.getQuit().addActionListener(this);
 				}
 				else if (objFromServer == null) {
 					System.out.println("objFromServer is null...");
@@ -135,6 +127,7 @@ public class Client implements ActionListener {
                                 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(0);
@@ -150,7 +143,7 @@ public class Client implements ActionListener {
 
 		gui.getOkButton().addActionListener(this);
 		gui.getPanel3().setVisible(false);
-		gui.getSvarsAlternativ();
+		gui.getAnswerAlt();
 
 		gui.getLabel1().setText(question.getQuestion());
 		gui.getPanel1().revalidate();
@@ -162,19 +155,19 @@ public class Client implements ActionListener {
 		ready = false;
 	}
 
-	private void awaitReady() {
+	private void waitForReady() {
 		while(!ready) {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				System.out.println("Sleep interrupted for while(!ready)...");
+				e.printStackTrace();
 			}
 		}
 		try {
 			out.writeObject("ready");
 			out.flush();
 		} catch (IOException e) {
-			System.out.println("Could not send ready...");
+			e.printStackTrace();
 		}
 		ready = false;
 	}
@@ -188,18 +181,18 @@ public class Client implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// if source is a button do following
-		if (gui.getKategoriAlternativ().contains((e.getSource()))) {
-			for (JButton b : gui.getKategoriAlternativ()) {
+		// if source is a button do following.... går till den kategory man har tryckt på
+		if (gui.getCatAlt().contains((e.getSource()))) {
+			for (JButton b : gui.getCatAlt()) {
 				if (e.getSource() == b) {
-					sendTextOfButton(b);
+					ButtonText(b);
 				}
 			}
 			ready = true;
 		}
-		else if(gui.getSvarsAlternativ().contains((e.getSource()))) {
+		else if(gui.getAnswerAlt().contains((e.getSource()))) {
 
-			for (JButton b : gui.getSvarsAlternativ()) {
+			for (JButton b : gui.getAnswerAlt()) {
 				if (b.getText().equals(question.getCorrectAnswer())) {
 					b.setBackground(Color.GREEN);
 					gui.getPanel2().repaint();
@@ -209,8 +202,8 @@ public class Client implements ActionListener {
 						b.setBackground(Color.RED);
 						gui.getPanel2().repaint();
 					}
-					sendTextOfButton(b);
-					for (JButton bA : gui.getSvarsAlternativ()) {
+					ButtonText(b);
+					for (JButton bA : gui.getAnswerAlt()) {
 						bA.removeActionListener(this);
 					}
 					gui.getPanel3().setVisible(true);
@@ -223,18 +216,18 @@ public class Client implements ActionListener {
 			gui.getPanel3().revalidate();
 			ready = true;
 		}
-		if (e.getSource() == gui.getAvsluta()) {
+		if (e.getSource() == gui.getQuit()) {
 			System.exit(0);
 		}
 	}
 
 
-	private void sendTextOfButton(JButton b) {
+	private void ButtonText(JButton b) {
 
 		try {
 			out.writeObject(b.getText()); out.flush();
 		} catch (IOException e1) {
-			System.out.println("Could not send out text of button...");
+			e1.printStackTrace();
 		}
 	}
 }

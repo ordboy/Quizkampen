@@ -21,7 +21,7 @@ public class Player {
 	protected int score = 0;
 	
 	private String answer;
-	private String answerCheck;
+	private String checkAnswer;
 	
 	
 	Player(Socket socket){
@@ -32,7 +32,7 @@ public class Player {
 			out = new ObjectOutputStream(connection.getOutputStream()); out.flush();
 			in = new ObjectInputStream(connection.getInputStream());
 		} catch (IOException e) {
-			System.out.println("Could not set up streams...");
+			e.printStackTrace();
 		}
 		
 	}
@@ -44,24 +44,24 @@ public class Player {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			System.out.println("Could not send object...");
+			e.printStackTrace();
 		}
 	}
 	
 
-	protected String retrieveAnswer() {
-		answerCheck = answer;
+	protected String checkClickedButton() {
+		checkAnswer = answer;
 		try {
 			while(true) {
 				answer = (String) in.readObject(); 
-				if (!answer.equals(answerCheck)) {
+				if (!answer.equals(checkAnswer)) {
 					break;
 				}
 			}
 		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException...");
+			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("No connection...");
+			e.printStackTrace();
 			System.exit(0);
 		}
 		
@@ -69,15 +69,11 @@ public class Player {
 		
 	}
 	
-	protected void incrementScore() {
+	protected void scoreCounter() {
 		score++;
 	}
 
 	protected int getScore() {
 		return score;
-	}
-
-
-	public void sendRoundScoreP1(String player1) {
 	}
 }

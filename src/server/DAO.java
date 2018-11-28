@@ -9,7 +9,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class DAO {
-
+        //Lista av fråga som är dynamisk man kan lägga till flera frågor och kategorier och GUIn ska fungera
     public DAO(){
         initDAO();
     }
@@ -17,8 +17,8 @@ public class DAO {
 	private List<Category> category = new ArrayList<>();
 
     private void initDAO(){
-        category.add(
-new Category("Art Questions", Arrays.asList(
+        category.add( //skapar kategorier
+                new Category("Art Questions", Arrays.asList( //skapar en arraylista av frågan och svaralt samt rätta svars alt
                         new Question("Under vilket årtionde dog Picasso?", "1910", "1930","1960","1973", 4),
                         new Question("Vilket år föddes den svenska konstnären Lars-Göran Abrahamsson?", "1720", "1950","1855","1965", 3),
                         new Question("Vilket år föddes konstnären Ludwig van Beethoven?", "1671", "1770 ", "1920", "1891", 2),
@@ -54,17 +54,18 @@ new Category("Art Questions", Arrays.asList(
         );
     }
 
-	private String[] categoryChoice = new String[3];
+	//private String[] categoryChoice = new String[3];
 
     public List<Question> getQuestionFromCat(String catName){
+        // hämtar kategoriera -> filterar ut den valda -> distinct ser till att kategorin som hämtas har ett unik category name -> limit ser till att bara en returneras
+        List<Category> category1 = category.stream().filter( cat -> cat.getName().equalsIgnoreCase(catName)).distinct().limit(1).collect(toList());
 
-        List<Category> category1 = category.stream().filter( cat -> cat.getName().equalsIgnoreCase(catName)).distinct().limit(1).collect(toList()); // distinct unik category name och limit , returnera bara en
         return category1.get(0).getQuestions();
     }
 
-    public String[] getCategories() {
-        categoryChoice = category.stream().map(Category::getName).toArray(String[]::new);
-		return categoryChoice;
-    }
+   // public String[] getCategories() { // gör en array av de olika kategorierna
+   //     categoryChoice = category.stream().map(Category::getName).toArray(String[]::new);
+	//	return categoryChoice;
+    //}
 
 }

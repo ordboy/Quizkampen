@@ -21,13 +21,13 @@ public class ServerListener {
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.out.println("Could not set up ServerSocket...");
+            e.printStackTrace();
         }
 
         while (true) {
 
             try {
-                System.out.println("Waiting for clients to connect...");
+                System.out.println("Väntar på klienter...");
 
                 connection = serverSocket.accept(); // accepterar första anslutningen, skapar en player "server" åt client 1
 
@@ -39,7 +39,7 @@ public class ServerListener {
                 System.out.println("Connected to player 2: " +
                         connection.getInetAddress().getHostName());
 
-                System.out.println("Starting game...");
+                System.out.println("Starting...");
 
                 new Thread(new Runnable() {
 
@@ -51,7 +51,7 @@ public class ServerListener {
                 }).start();
 
             } catch (IOException e) {
-                System.out.println("Lost connection to client(s)...");
+                e.printStackTrace();
             }
         }
     }

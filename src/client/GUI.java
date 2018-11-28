@@ -25,13 +25,13 @@ public class GUI extends JFrame implements ActionListener{
     private JPanel panel2 = new JPanel();			//panel2 har svars- eller kategoriknappar
     private JPanel panel3 = new JPanel();			//panel3 har okButton eller Avsluta
 
-    private JLabel label1 = new JLabel("Väntar på att spel ska starta");
+    private JLabel label1 = new JLabel("Spelet Startar Strax");
 
-    private JButton okButton = new JButton("Tryck för att gå vidare");
-    private JButton avsluta = new JButton("Avsluta");
+    private JButton okButton = new JButton("Nästa fråga");
+    private JButton quit = new JButton("Avsluta");
 
-    private List<JButton> svarsAlternativ = new ArrayList<>();	//Lista med alla svarsknappar
-    private List<JButton> kategoriAlternativ= new ArrayList<>();		//Lista med alla kategoriknappar
+    private List<JButton> answerAlt = new ArrayList<>();	//Lista med alla svarsknappar
+    private List<JButton> catAlt = new ArrayList<>();		//Lista med alla kategoriknappar
     
     Color[] c = {new Color(0x99, 0x00, 0x99),new Color(0xfd, 0x59, 0x56),new Color(0xfd, 0xdc, 0x5c),new Color(0x4f, 0x73, 0x8e)};
     public GUI(){
@@ -81,7 +81,7 @@ public class GUI extends JFrame implements ActionListener{
     }
 
 
-    public void setupCategoryGUI(String[] categories, Client client) {
+    public void guiCatSetup(String[] categories, Client client) {
         label1.setText("Välj kategori");
         panel2.setVisible(true);
         panel3.setVisible(false);
@@ -90,12 +90,12 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < categories.length; i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Arial", Font.BOLD, 15));
+            b.setFont(new Font("Times New Roman", Font.BOLD, 18));
             b.setText(categories[i]);
             
             b.setBackground(c[i]);
             b.addActionListener(client);
-            kategoriAlternativ.add(b);
+            catAlt.add(b);
             panel2.add(b);
         }
 
@@ -103,7 +103,7 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void removeCategoryGUI() {
 
-        for (JButton b : kategoriAlternativ) {
+        for (JButton b : catAlt) {
             panel2.remove(b);
         }
 
@@ -125,12 +125,12 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < shuffledList.size(); i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Arial", Font.BOLD, 15));
+            b.setFont(new Font("Times New Roman", Font.BOLD, 18));
             b.setText(shuffledList.get(i));
             b.addActionListener(client);
             b.setBackground(null);
 
-            svarsAlternativ.add(b);
+            answerAlt.add(b);
             panel2.add (b);
         }
 
@@ -138,7 +138,7 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void removeQuestionGUI() {
 
-        for (JButton b : svarsAlternativ) {
+        for (JButton b : answerAlt) {
             panel2.remove(b);
             
         }
@@ -152,11 +152,11 @@ public class GUI extends JFrame implements ActionListener{
 
         panel2.setVisible(false);
         panel3.remove(okButton);
-        panel3.add(avsluta);
+        panel3.add(quit);
         panel3.setVisible(true);
 
-        label1.setFont(new Font("Arial", Font.BOLD, 20));
-        label1.setText("Spelare ett: " + i1 + " poäng  -  Spelare två: " + i2 + " poäng");
+        label1.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        label1.setText("Spelare 1: " + i1 + " poäng  -  Spelare 2: " + i2 + " poäng");
         revalidate();
         repaint();
     }
@@ -182,16 +182,16 @@ public class GUI extends JFrame implements ActionListener{
         return okButton;
     }
 
-    public JButton getAvsluta() {
-        return avsluta;
+    public JButton getQuit() {
+        return quit;
     }
 
-    public List<JButton> getKategoriAlternativ() {
-        return kategoriAlternativ;
+    public List<JButton> getCatAlt() {
+        return catAlt;
     }
 
-    public List<JButton> getSvarsAlternativ() {
-        return svarsAlternativ;
+    public List<JButton> getAnswerAlt() {
+        return answerAlt;
     }
 
     @Override

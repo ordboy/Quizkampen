@@ -6,12 +6,8 @@ package server;
 import model.WaitModel;
 import model.Question;
 import java.io.*;
-import java.net.*;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import server.Player;
 
 /**
  *
@@ -110,10 +106,10 @@ public class PlayerHandler {
 		
 		categoryChoices = databas.getCategories();
 		p.sendObject(categoryChoices);
-		category = p.retrieveAnswer();
+		category = p.checkClickedButton();
 		          
 		
-		awaitReadiness(p);
+		waitingForAnswerClick(p);
 	}
 
 	private void sendQuestions(Player p) {    //  här skickas frågorna en och en till spelaren som inte har fått välja kategori, då är redan frågorna satta i frågelistan
@@ -124,11 +120,11 @@ public class PlayerHandler {
 
 			p.sendObject(question);
 
-			if (p.retrieveAnswer().equals(question.getCorrectAnswer())) {
-				p.incrementScore();
+			if (p.checkClickedButton().equals(question.getCorrectAnswer())) {
+				p.scoreCounter();
 			}
 
-			awaitReadiness(p);
+			waitingForAnswerClick(p);
 
 		}
 	}
@@ -143,25 +139,15 @@ public class PlayerHandler {
 			
 			p.sendObject(question); 
 			                
-			if (p.retrieveAnswer().equals(question.getCorrectAnswer())) {
-				p.incrementScore();
+			if (p.checkClickedButton().equals(question.getCorrectAnswer())) {
+				p.scoreCounter();
 			}
 			
-			awaitReadiness(p);	
+			waitingForAnswerClick(p);
 			
 		}
 	}
 
-//	public void sendRoundScoreP1(Player p1){
-//		this.scores[0] = p1.getScore();
-//		this.p1.sendObject(scores);
-//	}
-  //
-//	public void sendRoundScoreP2(Player p2){
-//		this.scores[1] = p2.getScore();
-//		this.p1.sendObject(scores);
-//	}
-//
 	
 	private void sendScore(Player p1, Player p2) { // här skickas slutresultatet till båda spelare
 		
@@ -171,9 +157,9 @@ public class PlayerHandler {
 		this.p2.sendObject(scores);
 	}
 	
-	private void awaitReadiness(Player p) {
+	private void waitingForAnswerClick(Player p) { //finns i Player kollar om spelaren har klickat på ett svars alt.
 			
-		if (p.retrieveAnswer().equals("ready")) {} 
+		if (p.checkClickedButton().equals("ready")) {}
 	}
 	
 	
@@ -182,7 +168,7 @@ public class PlayerHandler {
 			p.load(new FileInputStream("src/Properties"));
 		}
 		catch(Exception e){
-			System.out.println("Could not find Properties file");
+			e.printStackTrace();
 		}
 		
 		String roundsString = p.getProperty("rounds", "2");
