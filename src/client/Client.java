@@ -15,8 +15,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-//import server.Question;
-//import server.WaitModel;
+
 import client.GUI;
 import model.*;
 

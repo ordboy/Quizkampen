@@ -1,8 +1,7 @@
 package client;
 
 
-//import client.Client;
-//import server.Question;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
