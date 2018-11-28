@@ -2,7 +2,6 @@ package client;
 
 
 
-import server.Question;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.Question;
+
 public class GUI extends JFrame implements ActionListener{
+
 
     private JPanel panel1 = new JPanel();			//panel1 har en JLabel (dvs bara text)
     private JPanel panel2 = new JPanel();			//panel2 har svars- eller kategoriknappar
@@ -30,33 +32,49 @@ public class GUI extends JFrame implements ActionListener{
 
     private List<JButton> svarsAlternativ = new ArrayList<>();	//Lista med alla svarsknappar
     private List<JButton> kategoriAlternativ= new ArrayList<>();		//Lista med alla kategoriknappar
-
+    
+    Color[] c = {new Color(0x99, 0x00, 0x99),new Color(0xfd, 0x59, 0x56),new Color(0xfd, 0xdc, 0x5c),new Color(0x4f, 0x73, 0x8e)};
     public GUI(){
+        
 
         setLayout(new GridLayout(3, 1));
 
         label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 15));
         panel1.add(label1);
-
+        panel1.setBackground(new java.awt.Color(153, 255, 153));
+        panel2.setBackground(Color.pink);
+        panel3.setBackground(new java.awt.Color(153, 255, 153));
+        label1.setBackground(new java.awt.Color(153, 255, 153));
+        panel1.setOpaque(true);
+        panel2.setOpaque(true);
+        panel3.setOpaque(true);
+        label1.setOpaque(true);
+        this.getContentPane().setBackground(new java.awt.Color(153, 255, 153));
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);   // la till pallar inte stänga allt hela tiden
+//        panel2.setForeground(Color.pink);
+        
+        this.setBackground(new java.awt.Color(153, 255, 153));
+        
         add(panel1); panel1.setVisible(true);
         add(panel2); panel2.setVisible(false);
         add(panel3); panel3.setVisible(false);
+        
+        int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5); //hämtar höjden på skärmen program startas på delat på 2.5
+        int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);     //hämtar bredden på skärmen och delar på tre
 
-        int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5);
-        int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+        setSize(sizeWidth, sizeHeight); // sätter storlek från ovan
 
-        setSize(sizeWidth, sizeHeight);
-
-        int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
-        int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2);
+        int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3); //samma som ovan för placering
+        int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
         setLocation(locWidth, locHeight);
+        
         setVisible(true);
     }
 
     public void waitingForOpponent(String score) {
         
         label1.setText("Motståndare spelar : " + "du har " + score + " poäng");
-        
+        label1.setForeground(Color.red);
         panel2.setVisible(false);
         panel3.setVisible(false);
         revalidate();
@@ -72,8 +90,10 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < categories.length; i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Georgia", Font.BOLD, 18));
+            b.setFont(new Font("Arial", Font.BOLD, 15));
             b.setText(categories[i]);
+            
+            b.setBackground(c[i]);
             b.addActionListener(client);
             kategoriAlternativ.add(b);
             panel2.add(b);
@@ -105,7 +125,7 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < shuffledList.size(); i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Georgia", Font.BOLD, 18));
+            b.setFont(new Font("Arial", Font.BOLD, 15));
             b.setText(shuffledList.get(i));
             b.addActionListener(client);
             b.setBackground(null);
@@ -120,8 +140,9 @@ public class GUI extends JFrame implements ActionListener{
 
         for (JButton b : svarsAlternativ) {
             panel2.remove(b);
+            
         }
-
+        
         panel2.revalidate();
         panel2.repaint();
     }
@@ -134,8 +155,8 @@ public class GUI extends JFrame implements ActionListener{
         panel3.add(avsluta);
         panel3.setVisible(true);
 
-        label1.setFont(new Font("Georgia", Font.BOLD, 18));
-        label1.setText("Spelare 1: " + i1 + " poäng  ||  Spelare 2: " + i2 + " poäng");
+        label1.setFont(new Font("Arial", Font.BOLD, 20));
+        label1.setText("Spelare ett: " + i1 + " poäng  -  Spelare två: " + i2 + " poäng");
         revalidate();
         repaint();
     }
@@ -175,6 +196,7 @@ public class GUI extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("we should not be here");
+        System.out.println("should not be here");
     }
+
 }

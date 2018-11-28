@@ -1,5 +1,6 @@
-package server;
+package model;
 
+import model.Question;
 import java.util.List;
 
 public class Category {

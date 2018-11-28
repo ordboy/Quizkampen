@@ -6,30 +6,36 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import server.Question;
+import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 
-
+import client.GUI;
+import model.*;
 
 
 public class Client implements ActionListener {
 
 	GUI gui = new GUI();
+        
 
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 
 	private int port = 55555;
-	private String ip = "127.0.0.1"; //"172.20.201.226"
+	private String ip = "127.0.0.1";
 	private Socket connection;
 
 	String fromServer;
 	Question question;
 	String[] categories;
-
+       
 	boolean ready = false;
 	boolean inGame = true;
 
@@ -50,9 +56,9 @@ public class Client implements ActionListener {
 		try {
 			connection = new Socket(ip, port);
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			System.out.println("Could not find host...");
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("No connection to server...");
 		}
 	}
 	private void setupWriter() {
@@ -61,7 +67,7 @@ public class Client implements ActionListener {
 			out = new ObjectOutputStream(connection.getOutputStream());
 			out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Could not set up OutputStream...");
 		}
 	}
 
@@ -70,7 +76,7 @@ public class Client implements ActionListener {
 		try {
 			in = new ObjectInputStream(connection.getInputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Could not set up InputStream...");
 		}
 	}
 
@@ -100,23 +106,25 @@ public class Client implements ActionListener {
 		while(inGame) {
 			try {
 				objFromServer = in.readObject();
-				if (objFromServer instanceof WaitModel) {
-					WaitModel wm = (WaitModel) objFromServer; //String ("wait")
+				if (objFromServer instanceof model.WaitModel) {
+					model.WaitModel wm = (model.WaitModel) objFromServer; //String ("wait")
 					if (wm.getStatus().equalsIgnoreCase("wait")) {
 						gui.waitingForOpponent(wm.getScore());
 					}
 				}
 				else if (objFromServer instanceof String[]) {			//Categories
-					gui.setupCategoryGUI((String[])objFromServer,this);
+                                    gui.setupCategoryGUI((String[])objFromServer,this);         
 					awaitReady();
 					gui.removeCategoryGUI();
 				}
 				else if (objFromServer instanceof Question) {			//Question
-					setupQuestion();
+                                                                       
+                                        setupQuestion();
 					awaitReady();
 					gui.removeQuestionGUI();
 				}
 				else if (objFromServer instanceof int[]) {
+                                    
 					int[] scores =  (int[]) objFromServer;
 					gui.setupScoreGUI(scores[0], scores[1]);
 					gui.getAvsluta().addActionListener(this);
@@ -124,6 +132,7 @@ public class Client implements ActionListener {
 				else if (objFromServer == null) {
 					System.out.println("objFromServer is null...");
 				}
+                                
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -137,7 +146,7 @@ public class Client implements ActionListener {
 
 	private void setupQuestion() {
 
-		question = (Question) objFromServer;
+		question = (model.Question) objFromServer;
 
 		gui.getOkButton().addActionListener(this);
 		gui.getPanel3().setVisible(false);
@@ -158,7 +167,7 @@ public class Client implements ActionListener {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				System.out.println("Sleep interrupted for while(!ready)...");
 			}
 		}
 		try {
@@ -228,5 +237,4 @@ public class Client implements ActionListener {
 			System.out.println("Could not send out text of button...");
 		}
 	}
-
 }
