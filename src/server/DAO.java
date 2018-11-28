@@ -1,5 +1,7 @@
 package server;
 
+import model.Category;
+import model.Question;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

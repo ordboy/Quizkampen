@@ -1,8 +1,8 @@
 package client;
 
 
-import client.Client;
-import server.Question;
+//import client.Client;
+//import server.Question;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.Question;
 
 public class GUI extends JFrame implements ActionListener{
 
@@ -37,11 +39,17 @@ public class GUI extends JFrame implements ActionListener{
 
         label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 15));
         panel1.add(label1);
-
+        panel1.setBackground(new java.awt.Color(153, 255, 153));
+        panel3.setBackground(new java.awt.Color(153, 255, 153));
+        panel2.setBackground(Color.pink);
+        panel2.setForeground(Color.pink);
+        
+        this.setBackground(new java.awt.Color(153, 255, 153));
+        
         add(panel1); panel1.setVisible(true);
         add(panel2); panel2.setVisible(false);
         add(panel3); panel3.setVisible(false);
-
+        
         int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5);
         int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
 

@@ -3,13 +3,14 @@
  */
 package server;
 
+import model.WaitModel;
+import model.Question;
 import java.io.*;
 import java.net.*;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.WaitModel;
 import server.Player;
 
 /**
@@ -108,13 +109,14 @@ public class PlayerHandler {
 		
 		categoryChoices = databas.getCategories();
 		p.sendObject(categoryChoices);
-		
 		category = p.retrieveAnswer();
+		          
+		
 		awaitReadiness(p);
 	}
 
 	private void sendQuestions(Player p) {
-
+                    
 		for(int i = 0; i < questionsPerRound; i++) {
 
 			question = fourQuestions.get(i);
@@ -131,15 +133,14 @@ public class PlayerHandler {
 	}
 
 	private void sendQuestions(Player p, String category) {
-		
+		         
 		fourQuestions = databas.getQuestionFromCat(category);
-		
 		for(int i = 0; i < questionsPerRound; i++) {
 			
 			question = fourQuestions.get(i);
 			
 			p.sendObject(question); 
-			
+			                
 			if (p.retrieveAnswer().equals(question.getCorrectAnswer())) {
 				p.incrementScore();
 			}
