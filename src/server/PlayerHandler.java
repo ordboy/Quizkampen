@@ -62,7 +62,7 @@ public class PlayerHandler {
 
 
 
-	private void runGame() {
+	private void runGame() {     // Bestämmer hur ronder ska startas beroende på jämt eller ojämt antal
 		
 		if (rounds > 1 && rounds % 2 == 0) {
 			for (int i = 0; i < rounds/2; i++) {
@@ -84,7 +84,7 @@ public class PlayerHandler {
 	}
 	
 	
-	private void roundStartPlayer1() {
+	private void roundStartPlayer1() { // skickar kategori alternativ, hämtar frågor i vald kategori, visar score och skickar samma frågor till andra spelaren
 		
 		sendCategoryChoices(p1); 
 		sendQuestions(p1, category);
@@ -95,7 +95,7 @@ public class PlayerHandler {
 		
 	}
 	
-	private void roundStartPlayer2() {
+	private void roundStartPlayer2() { // efter spelare 2 har svarat på frågor upprepas metoden ovan i omvänd ordning
 
 		sendCategoryChoices(p2);
 		sendQuestions(p2, category);
@@ -105,7 +105,7 @@ public class PlayerHandler {
 	}
 	
 	
-	private void sendCategoryChoices(Player p) {
+	private void sendCategoryChoices(Player p) {    //  Hämtar frågor i form av Array, skickar denna till clientsidan, tar emot svar som processeras
 		
 		categoryChoices = databas.getCategories();
 		p.sendObject(categoryChoices);
@@ -115,7 +115,7 @@ public class PlayerHandler {
 		awaitReadiness(p);
 	}
 
-	private void sendQuestions(Player p) {
+	private void sendQuestions(Player p) {    //  här skickas frågorna en och en till spelaren som inte har fått välja kategori, då är redan frågorna satta i frågelistan
                     
 		for(int i = 0; i < questionsPerRound; i++) {
 
@@ -132,7 +132,8 @@ public class PlayerHandler {
 		}
 	}
 
-	private void sendQuestions(Player p, String category) {
+	private void sendQuestions(Player p, String category) {      // här sätts frågorna i frågelistan efter att en spelare har valt kategori, sen skickas frågorna en och en
+           
 		         
 		fourQuestions = databas.getQuestionFromCat(category);
 		for(int i = 0; i < questionsPerRound; i++) {
@@ -161,7 +162,7 @@ public class PlayerHandler {
 //	}
 //
 	
-	private void sendScore(Player p1, Player p2) {
+	private void sendScore(Player p1, Player p2) { // här skickas slutresultatet till båda spelare
 		
 		this.scores[0] = p1.getScore();
 		this.scores[1] = p2.getScore();
@@ -171,7 +172,7 @@ public class PlayerHandler {
 	
 	private void awaitReadiness(Player p) {
 			
-		if (p.retrieveAnswer().equals("ready")) {}
+		if (p.retrieveAnswer().equals("ready")) {} 
 	}
 	
 	
