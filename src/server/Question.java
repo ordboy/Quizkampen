@@ -20,7 +20,8 @@ public class Question implements Serializable {
     private String c;
     private String d;
     private int correctAnswer;
-
+    static final long serialVersionUID = 42L;
+    
     public Question(String question, String a, String b, String c, String d, int correctAnswer){
 
         this.question = question;

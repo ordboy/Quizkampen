@@ -54,8 +54,9 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     public void waitingForOpponent(String score) {
+        
         label1.setText("Motståndare spelar : " + "du har " + score + " poäng");
-
+        
         panel2.setVisible(false);
         panel3.setVisible(false);
         revalidate();
@@ -134,7 +135,7 @@ public class GUI extends JFrame implements ActionListener{
         panel3.setVisible(true);
 
         label1.setFont(new Font("Arial", Font.BOLD, 30));
-        label1.setText("Spelare ett: " + i1 + "  -  Spelare två: " + i2);
+        label1.setText("Spelare ett: " + i1 + " poäng  -  Spelare två: " + i2 + " poäng");
         revalidate();
         repaint();
     }
