@@ -11,31 +11,53 @@ import java.net.Socket;
 
 
 public class ServerListener {
-  
-    /**
-     * Runs the application. Pairs up clients that connect.
-     */
-    public static void main(String[] args) throws Exception {
-        ServerSocket listener = new ServerSocket(55555);
-        System.out.println(" Server is Runni");
-        
+
+    private int port = 55555;
+    private Socket connection;
+    private ServerSocket serverSocket;
+
+    private ServerListener() {
+
         try {
-            while (true) {
-                Protocol game = new Protocol();
-//                Game game = new Game();
-                PlayerHandler player1 
-                        = new PlayerHandler(listener.accept(), 1, game);
-                PlayerHandler player2 
-                        = new PlayerHandler(listener.accept(), 2, game);
-                player1.setOpponent(player2);
-                player2.setOpponent(player1);
-//                game.setCurrentPlayer(player1);
-                player1.start();
-                player2.start();
-                
-            }
-        } catch(Exception e){
-            e.printStackTrace();
+            serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            System.out.println("Could not set up ServerSocket...");
         }
+
+        while (true) {
+
+            try {
+                System.out.println("Waiting for clients to connect...");
+
+                connection = serverSocket.accept();
+
+                Player p1 = new Player(connection);
+                System.out.println("Connected to player 1: " +
+                        connection.getInetAddress().getHostName());
+
+                Player p2 = new Player(serverSocket.accept());
+                System.out.println("Connected to player 2: " +
+                        connection.getInetAddress().getHostName());
+
+                System.out.println("Starting game...");
+
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        new PlayerHandler(p1, p2);
+                    }
+
+                }).start();
+
+            } catch (IOException e) {
+                System.out.println("Lost connection to client(s)...");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        new ServerListener();
     }
 }

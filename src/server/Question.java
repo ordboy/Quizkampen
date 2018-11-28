@@ -1,34 +1,61 @@
 package server;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+//h
 public class Question implements Serializable {
 
-    protected String question;
-    protected List<AnswersPrel> answers = new ArrayList<>();
+    /**
+     *
+     */
 
-    public Question() {
-    }
+    private String question;
+    private String a;
+    private String b;
+    private String c;
+    private String d;
+    private int correctAnswer;
+    static final long serialVersionUID = 42L;
+    
+    public Question(String question, String a, String b, String c, String d, int correctAnswer){
 
-    public Question(String question) {
         this.question = question;
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.correctAnswer = correctAnswer;
     }
 
-    public void setCorrectAnswers(String correctAnswer, boolean isTrue) {
-        answers.add(new AnswersPrel(correctAnswer, isTrue));
+    public String[] getAnswers(){
+        return new String[]{a,b,c,d};
     }
-    public void setAnswers(String answer, boolean isFalse) {
-        answers.add(new AnswersPrel(answer, isFalse));
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getQuestionQ() {
+    public String getQuestion(){
         return question;
     }
+    public String getCorrectAnswer() {
+
+        if (correctAnswer == 1) {
+            return a;
+        }
+
+        if (correctAnswer == 2) {
+            return b;
+        }
+
+        if (correctAnswer == 3) {
+            return c;
+        }
+
+        if (correctAnswer == 4) {
+            return d;
+        }
+        return "";
+    }
+    
 }
