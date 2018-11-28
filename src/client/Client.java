@@ -1,4 +1,3 @@
-
 package client;
 
 import java.awt.Color;
@@ -16,9 +15,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import server.Question;
-import server.WaitModel;
+
 import client.GUI;
+import model.*;
 
 
 public class Client implements ActionListener {
@@ -35,7 +34,7 @@ public class Client implements ActionListener {
 	String fromServer;
 	Question question;
 	String[] categories;
-
+       
 	boolean ready = false;
 	boolean inGame = true;
 
@@ -89,7 +88,7 @@ public class Client implements ActionListener {
 					break;
 				}
 				else if(fromServer.equals("player2")) {
-					gui.setTitle("Spelare tv�");
+					gui.setTitle("Spelare två");
 					break;
 				}
 			} catch (ClassNotFoundException e) {
@@ -106,23 +105,25 @@ public class Client implements ActionListener {
 		while(inGame) {
 			try {
 				objFromServer = in.readObject();
-				if (objFromServer instanceof WaitModel) {
-					WaitModel wm = (WaitModel) objFromServer; //String ("wait")
+				if (objFromServer instanceof model.WaitModel) {
+					model.WaitModel wm = (model.WaitModel) objFromServer; //String ("wait")
 					if (wm.getStatus().equalsIgnoreCase("wait")) {
 						gui.waitingForOpponent(wm.getScore());
 					}
 				}
 				else if (objFromServer instanceof String[]) {			//Categories
-					gui.setupCategoryGUI((String[])objFromServer,this);
+                                    gui.setupCategoryGUI((String[])objFromServer,this);
 					awaitReady();
 					gui.removeCategoryGUI();
 				}
 				else if (objFromServer instanceof Question) {			//Question
-					setupQuestion();
+                                                                       
+                                        setupQuestion();
 					awaitReady();
 					gui.removeQuestionGUI();
 				}
 				else if (objFromServer instanceof int[]) {
+                                    
 					int[] scores =  (int[]) objFromServer;
 					gui.setupScoreGUI(scores[0], scores[1]);
 					gui.getAvsluta().addActionListener(this);
@@ -130,6 +131,7 @@ public class Client implements ActionListener {
 				else if (objFromServer == null) {
 					System.out.println("objFromServer is null...");
 				}
+                                
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -143,7 +145,7 @@ public class Client implements ActionListener {
 
 	private void setupQuestion() {
 
-		question = (Question) objFromServer;
+		question = (model.Question) objFromServer;
 
 		gui.getOkButton().addActionListener(this);
 		gui.getPanel3().setVisible(false);
@@ -235,4 +237,3 @@ public class Client implements ActionListener {
 		}
 	}
 }
-
