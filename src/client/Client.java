@@ -6,18 +6,13 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
+
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.*;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
 import server.Question;
-import server.WaitModel;
-import client.GUI;
+import javax.swing.JButton;
+
+
 
 
 public class Client implements ActionListener {
@@ -28,7 +23,7 @@ public class Client implements ActionListener {
 	private ObjectInputStream in;
 
 	private int port = 55555;
-	private String ip = "127.0.0.1";
+	private String ip = "127.0.0.1"; //"172.20.201.226"
 	private Socket connection;
 
 	String fromServer;
@@ -55,9 +50,9 @@ public class Client implements ActionListener {
 		try {
 			connection = new Socket(ip, port);
 		} catch (UnknownHostException e) {
-			System.out.println("Could not find host...");
+			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("No connection to server...");
+			e.printStackTrace();
 		}
 	}
 	private void setupWriter() {
@@ -66,7 +61,7 @@ public class Client implements ActionListener {
 			out = new ObjectOutputStream(connection.getOutputStream());
 			out.flush();
 		} catch (IOException e) {
-			System.out.println("Could not set up OutputStream...");
+			e.printStackTrace();
 		}
 	}
 
@@ -75,7 +70,7 @@ public class Client implements ActionListener {
 		try {
 			in = new ObjectInputStream(connection.getInputStream());
 		} catch (IOException e) {
-			System.out.println("Could not set up InputStream...");
+			e.printStackTrace();
 		}
 	}
 
@@ -88,7 +83,7 @@ public class Client implements ActionListener {
 					break;
 				}
 				else if(fromServer.equals("player2")) {
-					gui.setTitle("Spelare tv�");
+					gui.setTitle("Spelare två");
 					break;
 				}
 			} catch (ClassNotFoundException e) {
@@ -163,7 +158,7 @@ public class Client implements ActionListener {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				System.out.println("Sleep interrupted for while(!ready)...");
+				e.printStackTrace();
 			}
 		}
 		try {
@@ -233,4 +228,5 @@ public class Client implements ActionListener {
 			System.out.println("Could not send out text of button...");
 		}
 	}
+
 }

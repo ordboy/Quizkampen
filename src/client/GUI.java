@@ -1,7 +1,7 @@
 package client;
 
 
-import client.Client;
+
 import server.Question;
 
 import java.awt.*;
@@ -72,7 +72,7 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < categories.length; i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Arial", Font.BOLD, 15));
+            b.setFont(new Font("Georgia", Font.BOLD, 18));
             b.setText(categories[i]);
             b.addActionListener(client);
             kategoriAlternativ.add(b);
@@ -105,7 +105,7 @@ public class GUI extends JFrame implements ActionListener{
 
         for (int i=0; i < shuffledList.size(); i++) {
             JButton b = new JButton();
-            b.setFont(new Font("Arial", Font.BOLD, 15));
+            b.setFont(new Font("Georgia", Font.BOLD, 18));
             b.setText(shuffledList.get(i));
             b.addActionListener(client);
             b.setBackground(null);
@@ -134,8 +134,8 @@ public class GUI extends JFrame implements ActionListener{
         panel3.add(avsluta);
         panel3.setVisible(true);
 
-        label1.setFont(new Font("Arial", Font.BOLD, 30));
-        label1.setText("Spelare ett: " + i1 + " poäng  -  Spelare två: " + i2 + " poäng");
+        label1.setFont(new Font("Georgia", Font.BOLD, 18));
+        label1.setText("Spelare 1: " + i1 + " poäng  ||  Spelare 2: " + i2 + " poäng");
         revalidate();
         repaint();
     }
@@ -175,6 +175,6 @@ public class GUI extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("should not be here");
+        System.out.println("we should not be here");
     }
 }

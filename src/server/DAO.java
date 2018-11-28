@@ -21,7 +21,7 @@ new Category("Art Questions", Arrays.asList(
                         new Question("Vilket år föddes den svenska konstnären Lars-Göran Abrahamsson??", "1720", "1950","1860","1970", 2),
                         new Question("Du ökar hastigheten från 30 km/h till 90 km/h. Hur påverkas bromssträckan?", "Den blir 9 gånger längre", "Den blir 3 gånger längre.", "Den blir 2 gånger längre.", "Den förblir oförändrad.", 3),
                         new Question("När gick vi över till högertrafik?", "1947", "1967", "1900", "1000", 4)
-                        ))
+            ))
         );
         category.add(
                 new Category("Car Questions", Arrays.asList(
