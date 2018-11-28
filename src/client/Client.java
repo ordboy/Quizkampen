@@ -23,6 +23,7 @@ import model.*;
 public class Client implements ActionListener {
 
 	GUI gui = new GUI();
+        
 
 	private ObjectOutputStream out;
 	private ObjectInputStream in;

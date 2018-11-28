@@ -40,9 +40,16 @@ public class GUI extends JFrame implements ActionListener{
         label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 15));
         panel1.add(label1);
         panel1.setBackground(new java.awt.Color(153, 255, 153));
-        panel3.setBackground(new java.awt.Color(153, 255, 153));
         panel2.setBackground(Color.pink);
-        panel2.setForeground(Color.pink);
+        panel3.setBackground(new java.awt.Color(153, 255, 153));
+        label1.setBackground(new java.awt.Color(153, 255, 153));
+        panel1.setOpaque(true);
+        panel2.setOpaque(true);
+        panel3.setOpaque(true);
+        label1.setOpaque(true);
+        this.getContentPane().setBackground(new java.awt.Color(153, 255, 153));
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        panel2.setForeground(Color.pink);
         
         this.setBackground(new java.awt.Color(153, 255, 153));
         
@@ -50,14 +57,15 @@ public class GUI extends JFrame implements ActionListener{
         add(panel2); panel2.setVisible(false);
         add(panel3); panel3.setVisible(false);
         
-        int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5);
-        int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+        int sizeHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2.5); //hämtar höjden på skärmen program startas på delat på 2.5
+        int sizeWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);     //hämtar bredden på skärmen och delar på tre
 
-        setSize(sizeWidth, sizeHeight);
+        setSize(sizeWidth, sizeHeight); // sätter storlek från ovan
 
-        int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
-        int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2);
+        int locHeight = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3); //samma som ovan för placering
+        int locWidth = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
         setLocation(locWidth, locHeight);
+        
         setVisible(true);
     }
 
